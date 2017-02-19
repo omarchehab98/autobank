@@ -1,0 +1,35 @@
+{
+  "name": "eun",
+  "version": "1.0.0",
+  "description": "My personal butler!",
+  "main": "src/main.js",
+  "scripts": {
+    "lint": "xo --fix",
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/omarchehab98/eun.git"
+  },
+  "author": "Omar Chehab",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/omarchehab98/eun/issues"
+  },
+  "homepage": "https://github.com/omarchehab98/eun#readme",
+  "dependencies": {
+    "eun-mailbox": "^1.0.0",
+    "lodash": "^4.17.4"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0",
+    "xo": "^0.17.1"
+  },
+  "xo": {
+    "env": [
+      "node",
+      "mocha"
+    ]
+  }
+}
