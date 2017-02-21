@@ -23,7 +23,7 @@ npm install eun
 
 <!-- Definitions -->
 
-[logo]: https://cdn.rawgit.com/omarchehab98/eun/XXXXXXXX/logo.svg
+[logo]: https://cdn.rawgit.com/omarchehab98/eun/312f622f/logo.svg
 
 [build-badge]: https://travis-ci.org/omarchehab98/eun.svg?branch=master
 
