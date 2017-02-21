@@ -4,8 +4,9 @@
   "description": "My personal butler!",
   "main": "src/main.js",
   "scripts": {
-    "lint": "xo --fix",
-    "test": "mocha"
+    "lint": "xo",
+    "test": "mocha",
+    "start": "node src/main.js"
   },
   "repository": {
     "type": "git",
@@ -18,7 +19,10 @@
   },
   "homepage": "https://github.com/omarchehab98/eun#readme",
   "dependencies": {
-    "eun-mailbox": "^1.0.0",
+    "eun-filter": "^1.0.1",
+    "eun-filter-fieldset": "^2.0.0",
+    "eun-filter-rbc": "^1.0.1",
+    "eun-mailbox": "^2.0.1",
     "lodash": "^4.17.4"
   },
   "devDependencies": {

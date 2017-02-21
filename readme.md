@@ -1,6 +1,12 @@
-# eun [![Build Status][build-badge]][build-status] [![License][license-badge]][license]
+# ![eun][logo]
 
-**eun** is my day-to-day helper. He can be yours too!
+[![Build Status][build-badge]][build-status] [![License][license-badge]][license]
+
+`eun` is my day-to-day helper. He can be yours too!
+
+Currently, `eun`:
+
+* **automatically** logs **expenses** by **monitoring** mail
 
 ## Installation
 
@@ -16,6 +22,8 @@ npm install eun
 
 <!-- Definitions -->
 
+[logo]: https://cdn.rawgit.com/omarchehab98/eun/XXXXXXXX/logo.svg
+
 [build-badge]: https://travis-ci.org/omarchehab98/eun.svg?branch=master
 
 [build-status]: https://travis-ci.org/omarchehab98/eun
@@ -24,6 +32,6 @@ npm install eun
 
 [license]: https://github.com/omarchehab98/eun/blob/master/LICENSE
 
-[author]: https://omarchehab98.github.io
+[author]: https://omarchehab.com
 
 [npm]: https://www.npmjs.com/package/eun
