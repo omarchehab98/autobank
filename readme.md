@@ -2,7 +2,8 @@
 
 [![Build Status][build-badge]][build-status] [![License][license-badge]][license]
 
-`eun` is my day-to-day helper. He can be yours too!
+`eun` is my day-to-day helper. He can be yours too, just fork
+`omarchehab98/eun`!
 
 Currently, `eun`:
 
