@@ -19,10 +19,10 @@
   },
   "homepage": "https://github.com/omarchehab98/eun#readme",
   "dependencies": {
-    "eun-filter": "^1.0.1",
-    "eun-filter-fieldset": "^2.0.0",
-    "eun-filter-rbc": "^1.0.1",
-    "eun-mailbox": "^2.0.1",
+    "eun-filter": "^1.0.2",
+    "eun-filter-fieldset": "^2.1.0",
+    "eun-filter-rbc": "^1.0.2",
+    "eun-mailbox": "^2.0.2",
     "lodash": "^4.17.4"
   },
   "devDependencies": {
