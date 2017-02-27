@@ -1,9 +1,8 @@
 # ![eun][logo]
 
-[![Build Status][build-badge]][build-status] [![License][license-badge]][license]
+[![Build Status][build-badge]][build-status] [![XO code style][xo-badge]][xo] [![License][license-badge]][license]
 
-`eun` is my day-to-day helper. He can be yours too, just fork
-`omarchehab98/eun`!
+`eun` is my day-to-day helper. He can be yours too, just fork him!
 
 Currently, `eun`:
 
@@ -28,6 +27,10 @@ npm install eun
 [build-badge]: https://travis-ci.org/omarchehab98/eun.svg?branch=master
 
 [build-status]: https://travis-ci.org/omarchehab98/eun
+
+[xo]: https://github.com/sindresorhus/xo
+
+[xo-badge]: https://img.shields.io/badge/code_style-XO-5ed9c7.svg
 
 [license-badge]: https://img.shields.io/github/license/omarchehab98/eun.svg
 
