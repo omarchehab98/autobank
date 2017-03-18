@@ -1,39 +1,40 @@
 {
-  "name": "eun",
-  "version": "0.0.2",
-  "description": "My personal butler!",
-  "main": "src/main.js",
-  "scripts": {
-    "lint": "xo",
-    "test": "mocha",
-    "start": "node src/main.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/omarchehab98/eun.git"
-  },
-  "author": "Omar Chehab",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/omarchehab98/eun/issues"
-  },
-  "homepage": "https://github.com/omarchehab98/eun#readme",
-  "dependencies": {
-    "eun-filter": "^1.0.2",
-    "eun-filter-fieldset": "^2.1.0",
-    "eun-filter-rbc": "^1.0.2",
-    "eun-mailbox": "^2.0.2",
-    "lodash": "^4.17.4"
-  },
-  "devDependencies": {
-    "chai": "^3.5.0",
-    "mocha": "^3.2.0",
-    "xo": "^0.17.1"
-  },
-  "xo": {
-    "env": [
-      "node",
-      "mocha"
-    ]
-  }
+	"name": "eun",
+	"version": "0.0.2",
+	"description": "My personal butler!",
+	"main": "src/main.js",
+	"scripts": {
+		"lint": "xo",
+		"test": "mocha",
+		"start": "node src/main.js >> logs/transactions.log"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/omarchehab98/eun.git"
+	},
+	"author": "Omar Chehab",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/omarchehab98/eun/issues"
+	},
+	"homepage": "https://github.com/omarchehab98/eun#readme",
+	"dependencies": {
+		"eun-expenses": "^0.1.0",
+		"eun-filter": "^2.0.1",
+		"eun-filter-fieldset": "^2.1.0",
+		"eun-filter-rbc": "^1.0.2",
+		"eun-mailbox": "^2.0.2",
+		"lodash": "^4.17.4"
+	},
+	"devDependencies": {
+		"chai": "^3.5.0",
+		"mocha": "^3.2.0",
+		"xo": "^0.17.1"
+	},
+	"xo": {
+		"env": [
+			"node",
+			"mocha"
+		]
+	}
 }
