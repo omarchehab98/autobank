@@ -1,0 +1,18 @@
+{
+  "name": "eun",
+  "short_name": "eun",
+  "start_url": "/?homescreen=1",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#222233",
+  "theme_color": "#556688",
+  "icons": [{
+    "src": "icon/android-chrome-192x192.png",
+    "type": "image/png",
+    "sizes": "192x192"
+  }, {
+    "src": "icon/android-chrome-512x512.png",
+    "type": "image/png",
+    "sizes": "512x512"
+  }]
+}

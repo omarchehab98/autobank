@@ -6,7 +6,9 @@
 	"scripts": {
 		"lint": "xo",
 		"test": "mocha",
-		"start": "node src/main.js &> logs/transactions.log"
+		"start": "node src/server.js | tee -a logs/transactions.log",
+		"build": "webpack --env.production --config config/webpack",
+		"watch": "webpack-dashboard -- webpack-dev-server --config config/webpack"
 	},
 	"repository": {
 		"type": "git",
@@ -24,15 +26,42 @@
 		"eun-filter-fieldset": "^2.1.0",
 		"eun-filter-rbc": "^1.0.2",
 		"eun-mailbox": "^2.0.2",
-		"lodash": "^4.17.4"
+		"lodash": "^4.17.4",
+		"md-colors": "^1.0.0",
+		"react": "^15.4.2",
+		"react-dom": "^15.4.2",
+		"react-router": "^4.0.0"
 	},
 	"devDependencies": {
+		"autoprefixer": "^6.7.2",
+		"babel-core": "^6.22.1",
+		"babel-loader": "^6.2.10",
+		"babel-plugin-transform-react-jsx": "^6.22.0",
+		"babel-preset-babili": "0.0.12",
+		"babel-preset-es2015": "^6.22.0",
+		"babel-preset-stage-2": "^6.22.0",
 		"chai": "^3.5.0",
+		"clean-webpack-plugin": "^0.1.15",
+		"copy-webpack-plugin": "^4.0.1",
+		"css-loader": "^0.27.1",
+		"extract-text-webpack-plugin": "^2.1.0",
+		"html-webpack-plugin": "^2.28.0",
 		"mocha": "^3.2.0",
+		"node-sass": "^4.5.0",
+		"postcss-loader": "^1.2.2",
+		"sass-loader": "^6.0.3",
+		"serve": "^5.0.2",
+		"style-loader": "^0.13.1",
+		"sw-precache-webpack-plugin": "^0.9.0",
+		"webpack": "^2.2.1",
+		"webpack-dashboard": "^0.3.0",
+		"webpack-dev-server": "^2.3.0",
 		"xo": "^0.17.1"
 	},
 	"xo": {
-		"import/no-unresolved": false,
+		"ignore": [
+			"config/**"
+		],
 		"env": [
 			"node",
 			"mocha"
