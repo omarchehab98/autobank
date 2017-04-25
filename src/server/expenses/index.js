@@ -130,7 +130,7 @@ class Expenses extends EventEmitter {
    */
   getExpenses (s, e) {
     return new Promise((resolve, reject) => {
-      this._db.expenses.find({
+      Expense.find({
         timestamp: {
           $gte: s,
           $lt: e
@@ -165,7 +165,7 @@ class Expenses extends EventEmitter {
    */
   getIncome (s, e) {
     return new Promise((resolve, reject) => {
-      this._db.income.find({
+      Income.find({
         timestamp: {
           $gte: s,
           $lt: e

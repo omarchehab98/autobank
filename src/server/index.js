@@ -40,7 +40,6 @@ const mailbox = new Mailbox(credentials.mailbox)
 mailbox.on('mail', mail => filterForExpenses(mail.body.text))
 
 const API = require('./api/index.js')
-API({
-  path: '/api/v1',
-  port: 3001
+API(credentials.api, {
+  expenses
 })
