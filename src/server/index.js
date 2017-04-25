@@ -35,9 +35,9 @@ const filterForExpenses = new Filter({}, [
   ]
 ])
 
-const Mailbox = require('./mail/mailbox.js')
-const mailbox = new Mailbox(credentials.mailbox)
-mailbox.on('mail', mail => filterForExpenses(mail.body.text))
+// const Mailbox = require('./mail/mailbox.js')
+// const mailbox = new Mailbox(credentials.mailbox)
+// mailbox.on('mail', mail => filterForExpenses(mail.body.text))
 
 const API = require('./api/index.js')
 API(credentials.api, {

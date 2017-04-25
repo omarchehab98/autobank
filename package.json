@@ -9,7 +9,8 @@
     "test": "mocha",
     "start": "node src/server/index.js | tee -a logs/transactions.log",
     "build": "webpack --env.production --config config/webpack",
-    "watch": "webpack-dashboard -- webpack-dev-server --config config/webpack"
+    "watch-client": "webpack-dashboard -- webpack-dev-server --config config/webpack",
+    "watch-server": "nodemon --watch src/server src/server/index.js"
   },
   "repository": {
     "type": "git",

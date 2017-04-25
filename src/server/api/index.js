@@ -16,10 +16,21 @@ function API (options, dependencies) {
   const path = options.path || ''
   const port = options.port || '80'
 
-  app.get(`${path}/expenses/expenses`, expensesController(dependencies.expenses, expenseModel))
-  app.get(`${path}/expenses/income`, incomeController(dependencies.expenses, incomeModel))
+  app.get(`${path}/expenses/expenses`, [
+    setCORS,
+    expensesController(dependencies.expenses, expenseModel)
+  ])
+  app.get(`${path}/expenses/income`, [
+    setCORS,
+    incomeController(dependencies.expenses, incomeModel)
+  ])
 
   app.listen(port)
+}
+
+function setCORS (req, res, next) {
+  res.set('Access-Control-Allow-Origin', '*')
+  next()
 }
 
 module.exports = API
