@@ -1,7 +1,7 @@
 {
   "name": "eun",
   "short_name": "eun",
-  "start_url": "/?homescreen=1",
+  "start_url": "/",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#222233",
