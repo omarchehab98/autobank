@@ -22,9 +22,6 @@
   },
   "homepage": "https://github.com/omarchehab98/eun#readme",
   "dependencies": {
-    "eun-filter": "^2.0.1",
-    "eun-filter-fieldset": "^2.1.0",
-    "eun-filter-rbc": "^1.0.2",
     "express": "^4.15.2",
     "he": "^1.1.1",
     "imap": "^0.8.19",

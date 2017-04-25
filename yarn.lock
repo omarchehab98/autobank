@@ -2372,23 +2372,6 @@ etag@~1.8.0:
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/etag/-/etag-1.8.0.tgz#6f631aef336d6c46362b51764044ce216be3c051"
 
-eun-filter-fieldset@^2.1.0:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/eun-filter-fieldset/-/eun-filter-fieldset-2.1.1.tgz#ad6af4958cb5f1d3ca8e19088c8abd438637c56f"
-
-eun-filter-rbc@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/eun-filter-rbc/-/eun-filter-rbc-1.0.2.tgz#ca2f00e82fc2ca0c860640e4eaaf25554d203ec7"
-  dependencies:
-    lodash.isundefined "^3.0.1"
-    moment "^2.17.1"
-
-eun-filter@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/eun-filter/-/eun-filter-2.0.1.tgz#bdee459562f869127665440433eac3d1e4092915"
-  dependencies:
-    lodash "^4.17.4"
-
 event-emitter@~0.3.5:
   version "0.3.5"
   resolved "https://registry.yarnpkg.com/event-emitter/-/event-emitter-0.3.5.tgz#df8c69eef1647923c7157b9ce83840610b02cc39"
@@ -3709,10 +3692,6 @@ lodash.isplainobject@^4.0.6:
   version "4.0.6"
   resolved "https://registry.yarnpkg.com/lodash.isplainobject/-/lodash.isplainobject-4.0.6.tgz#7c526a52d89b45c45cc690b88163be0497f550cb"
 
-lodash.isundefined@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/lodash.isundefined/-/lodash.isundefined-3.0.1.tgz#23ef3d9535565203a66cefd5b830f848911afb48"
-
 lodash.keys@^3.0.0:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/lodash.keys/-/lodash.keys-3.1.2.tgz#4dbc0472b156be50a0b286855d1bd0b0c656098a"
@@ -3984,10 +3963,6 @@ mocha@^3.2.0:
     lodash.create "3.1.1"
     mkdirp "0.5.1"
     supports-color "3.1.2"
-
-moment@^2.17.1:
-  version "2.17.1"
-  resolved "https://registry.yarnpkg.com/moment/-/moment-2.17.1.tgz#fed9506063f36b10f066c8b59a144d7faebe1d82"
 
 moment@^2.18.1:
   version "2.18.1"
