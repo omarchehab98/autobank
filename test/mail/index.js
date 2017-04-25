@@ -95,18 +95,73 @@ describe(msg, function () {
 
   msg = `filters`
   describe(msg, function () {
+    msg = 'filter'
+    describe(msg, function () {
+      const tests = require('./unit/filter.js')
+
+      msg = 'returns false when no filter passes (lazy: true)'
+      it(msg, function () {
+        tests.testFalseLazy()
+      })
+
+      msg = 'returns manipulated value when a filter passes (lazy: true)'
+      it(msg, function () {
+        tests.testManipulate()
+      })
+
+      msg = 'returns false when no filter passes (lazy: false)'
+      it(msg, function () {
+        tests.testFalse()
+      })
+
+      msg = 'returns true when a filter passes (lazy: false)'
+      it(msg, function () {
+        tests.testManipulateLazy()
+      })
+
+      msg = 'does not continue down a filter if a strainer returns false'
+      it(msg, function (done) {
+        tests.testFalseStrainer(done)
+      })
+
+      msg = 'does not manipulate original object'
+      it(msg, function (done) {
+        tests.testDoesNotMutateOriginal(done)
+      })
+
+      msg = 'stops search after a leaf has been reached (lazy: true)'
+      it(msg, function (done) {
+        tests.testLazyStopsAtFirst(done)
+      })
+
+      msg = 'continues search even after a leaf has been reached (lazy: false)'
+      it(msg, function (done) {
+        tests.testAttemptsAllFilters(done)
+      })
+
+      msg = 'passes on strainer return value to next strainer'
+      it(msg, function () {
+        tests.testStrainerReturnValue()
+      })
+
+      msg = 'branching off a manipulator is illegal'
+      it(msg, function () {
+        tests.testBranchingOffManipulatorError()
+      })
+    })
+
     describe('fieldset', function () {
       const tests = require('./unit/filter-fieldset.js')
 
       msg = 'returns fields in a fieldset'
       it(msg, function () {
         tests.testFilter()
-      });
+      })
 
       msg = 'returns false for strings that are not fieldsets'
       it(msg, function () {
         tests.testFalse()
-      });
+      })
     })
 
     describe('rbc', function () {
