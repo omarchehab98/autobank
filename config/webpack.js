@@ -15,7 +15,9 @@ module.exports = env => {
         'react',
         'react-dom',
         'react-router-dom',
-        'prop-types'
+        'prop-types',
+        'material-ui',
+        'react-tap-event-plugin'
       ]
     },
     output: {

@@ -28,6 +28,7 @@
     "imap": "^0.8.19",
     "lodash": "^4.17.4",
     "mailparser": "^2.0.4",
+    "material-ui": "^0.17.4",
     "moment": "^2.18.1",
     "moment-timezone": "^0.5.13",
     "mongoose": "^4.9.6",
@@ -35,6 +36,7 @@
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-router-dom": "^4.1.1",
+    "react-tap-event-plugin": "^2.0.1",
     "striptags": "^3.0.1"
   },
   "devDependencies": {
