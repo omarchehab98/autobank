@@ -33,4 +33,5 @@ module.exports = function (expenses) {
       expenses.putIncome
     ]
   ])
+  return filterForExpenses
 }

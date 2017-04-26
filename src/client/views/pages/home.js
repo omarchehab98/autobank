@@ -4,7 +4,7 @@ import CardExpense from 'views/pure/card-expense.js'
 import server from 'views/helpers/network.js'
 
 export default class HomePage extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     this.state = {
@@ -12,7 +12,7 @@ export default class HomePage extends Component {
     }
   }
 
-  componentWillMount() {
+  componentWillMount () {
     server.getExpenses(0, Date.now())
       .then(expenses => this.setState({
         expenses

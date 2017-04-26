@@ -19,11 +19,11 @@ export default class CardExpense extends PureComponent {
   }
 }
 
-Card.propTypes = {
+CardExpense.propTypes = {
   account: PropTypes.string,
   amount: PropTypes.number,
   availableCredit: PropTypes.number,
   currency: PropTypes.string,
   description: PropTypes.string,
-  timestamp: PropTypes.number,
+  timestamp: PropTypes.number
 }

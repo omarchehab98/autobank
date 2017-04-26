@@ -7,12 +7,12 @@ const endpoints = {
 const NetworkFacade = {
   getExpenses: function (start, end) {
     const endpoint = endpoints.expenses(start, end)
-    return fetch(endpoint)
+    return window.fetch(endpoint)
       .then(res => res.json())
   },
   getIncome: function (start, end) {
     const endpoint = endpoints.income(start, end)
-    return fetch(endpoint)
+    return window.fetch(endpoint)
       .then(res => res.json())
   }
 }
