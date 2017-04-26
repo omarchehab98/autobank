@@ -1,7 +1,7 @@
 const assert = require('chai').assert
 
 const isFieldset = require('../../../src/server/mail/filters/fieldset.js')
-const filterRBC = require('../../../src/server/mail/filters/rbc.js')
+const filterRBC = require('../../../src/server/mail/filters/rbc.js')('Canada/Eastern')
 
 function testIsCreditWithdrawal () {
   let value = 'Account: ************1234\n' +

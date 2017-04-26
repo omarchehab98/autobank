@@ -5,7 +5,7 @@ module.exports = function (expenses) {
   const Filter = require('./mail/filter.js')
   const isString = require('lodash/isString')
   const filterFieldset = require('./mail/filters/fieldset.js')
-  const filterRBC = require('./mail/filters/rbc.js')
+  const filterRBC = require('./mail/filters/rbc.js')('Canada/Eastern')
   const filterForExpenses = new Filter({}, [
     [
       isString,
