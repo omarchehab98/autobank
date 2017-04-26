@@ -7,8 +7,8 @@
     "lint": "eslint .",
     "lint-auto": "eslint --fix .",
     "test": "mocha",
-    "start": "node src/server/index.js | tee -a logs/transactions.log",
-    "build": "webpack --env.production --config config/webpack",
+    "start": "NODE_ENV=production node src/server/index.js | tee -a logs/transactions.log",
+    "build-client": "webpack --env.production --config config/webpack",
     "watch-client": "webpack-dashboard -- webpack-dev-server --config config/webpack",
     "watch-server": "nodemon --watch src/server src/server/index.js"
   },
@@ -61,6 +61,7 @@
     "html-webpack-plugin": "^2.28.0",
     "mocha": "^3.2.0",
     "node-sass": "^4.5.0",
+    "nodemon": "^1.11.0",
     "postcss-loader": "^1.2.2",
     "sass-loader": "^6.0.3",
     "serve": "^5.0.2",

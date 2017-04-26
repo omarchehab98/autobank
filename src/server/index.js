@@ -3,43 +3,25 @@ const credentials = require('./credentials.json')
 
 const Expenses = require('./expenses/index.js')
 const expenses = new Expenses(credentials.expenses)
-const Filter = require('./mail/filter.js')
-const isString = require('lodash/isString')
-const filterFieldset = require('./mail/filters/fieldset.js')
-const filterRBC = require('./mail/filters/rbc.js')
-const filterForExpenses = new Filter({}, [
-  [
-    isString,
-    filterFieldset,
-    filterRBC.creditWithdrawal,
-    x => console.log(x) || true,
-    expenses.putExpense
-  ], [
-    isString,
-    filterFieldset,
-    filterRBC.creditDeposit,
-    x => console.log(x) || true,
-    expenses.putIncome
-  ], [
-    isString,
-    filterFieldset,
-    filterRBC.chequingWithdrawal,
-    x => console.log(x) || true,
-    expenses.putExpense
-  ], [
-    isString,
-    filterFieldset,
-    filterRBC.chequingDeposit,
-    x => console.log(x) || true,
-    expenses.putIncome
-  ]
-])
+console.log('Expenses: '+credentials.expenses.host+':'+credentials.expenses.port)
 
-// const Mailbox = require('./mail/mailbox.js')
-// const mailbox = new Mailbox(credentials.mailbox)
-// mailbox.on('mail', mail => filterForExpenses(mail.body.text))
+const Mailbox = require('./mail/mailbox.js')
+const filterForExpenses = require('./filterForExpenses.js')(expenses)
+const mailbox = new Mailbox(credentials.mailbox)
+mailbox.on('mail', mail => filterForExpenses(mail.body.text))
+console.log('Mailbox: '+credentials.mailbox.host+':'+credentials.mailbox.port)
 
 const API = require('./api/index.js')
 API(credentials.api, {
   expenses
 })
+console.log('API: localhost:' + credentials.api.port)
+
+if (process.env.NODE_ENV == 'production') {
+  const express = require('express')
+  const webserver = express()
+  const port = 3000
+  webserver.use(express.static('dist'))
+  webserver.listen(port)
+  console.log('Webserver: localhost:' + port)
+}
