@@ -3,9 +3,9 @@ import PropTypes from 'prop-types'
 import moment from 'moment'
 import {
   Card, CardHeader, CardText
-} from 'material-ui/Card';
+} from 'material-ui/Card'
 
-export default props => {
+function CardExpense (props) {
   const amount = props.amount + ' ' + props.currency
   const time = moment(props.timestamp * 1000).fromNow()
   return (
@@ -32,3 +32,13 @@ export default props => {
   )
 }
 
+CardExpense.propTypes = {
+  amount: PropTypes.number,
+  currency: PropTypes.string,
+  timestamp: PropTypes.number,
+  account: PropTypes.string,
+  availableCredit: PropTypes.number,
+  description: PropTypes.description
+}
+
+export default CardExpense

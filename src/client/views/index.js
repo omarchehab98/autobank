@@ -1,9 +1,10 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import {
   BrowserRouter as Router,
   Route
 } from 'react-router-dom'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 import HomePage from 'views/pages/home.js'
 
@@ -21,4 +22,8 @@ function Layout (props) {
       {props.children}
     </MuiThemeProvider>
   )
+}
+
+Layout.propTypes = {
+  children: PropTypes.node
 }
