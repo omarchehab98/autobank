@@ -3,6 +3,7 @@ import {
   BrowserRouter as Router,
   Route
 } from 'react-router-dom'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import HomePage from 'views/pages/home.js'
 
@@ -16,6 +17,8 @@ export default (
 
 function Layout (props) {
   return (
-    props.children
+    <MuiThemeProvider>
+      {props.children}
+    </MuiThemeProvider>
   )
 }

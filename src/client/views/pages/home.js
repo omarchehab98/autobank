@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
-import Card from 'views/pure/card.js'
 import CardExpense from 'views/pure/card-expense.js'
 import server from 'views/helpers/network.js'
+import './home.scss'
 
 export default class HomePage extends Component {
   constructor (props) {
@@ -21,10 +21,7 @@ export default class HomePage extends Component {
 
   render () {
     return (
-      <div>
-        <Card>
-          Hello Omar!
-        </Card>
+      <div className="home">
         {this.state.expenses.map(expense =>
           <CardExpense {...expense}/>)}
       </div>

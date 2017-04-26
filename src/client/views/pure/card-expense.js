@@ -1,29 +1,34 @@
-import React, {PureComponent} from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
-import './card-expense.scss'
 import moment from 'moment'
+import {
+  Card, CardHeader, CardText
+} from 'material-ui/Card';
 
-import Card from './card.js'
-
-export default class CardExpense extends PureComponent {
-  render () {
-    const amount = this.props.amount + ' ' + this.props.currency
-    const time = moment(this.props.timestamp * 1000).fromNow()
-    return (
-      <Card>
-        <span className="card-expense-amount">{amount}</span>
-        <span className="card-expense-time">{time}</span>
-        <div className="card-expense-description">{this.props.description}</div>
+export default props => {
+  const amount = props.amount + ' ' + props.currency
+  const time = moment(props.timestamp * 1000).fromNow()
+  return (
+    <Card style={{margin: '10px 0'}}>
+      <CardHeader
+        title={amount}
+        subtitle={time}
+        actAsExpander={true}
+        showExpandableButton={true}
+      />
+      <CardText expandable={true}>
+        <div className="card-expense-account">
+          Account {'*'.repeat(12) + props.account.substring(12)}
+        </div>
+        {props.availableCredit &&
+        <div className="card-expense-availablecredit">
+          Available Credit {props.availableCredit + ' ' + props.currency}
+        </div>}
+        <div className="card-expense-description">
+          {props.description}
+        </div>
+      </CardText>
       </Card>
-    )
-  }
+  )
 }
 
-CardExpense.propTypes = {
-  account: PropTypes.string,
-  amount: PropTypes.number,
-  availableCredit: PropTypes.number,
-  currency: PropTypes.string,
-  description: PropTypes.string,
-  timestamp: PropTypes.number
-}
