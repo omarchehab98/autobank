@@ -12,6 +12,7 @@ function CardExpense (props) {
     <Card style={{margin: '10px 0'}}>
       <CardHeader
         title={amount}
+        titleColor={props.amount <= 0 ? '#933' : '#393'}
         subtitle={time}
         actAsExpander={true}
         showExpandableButton={true}
