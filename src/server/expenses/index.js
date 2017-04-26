@@ -135,6 +135,17 @@ class Expenses extends EventEmitter {
           $gte: s,
           $lt: e
         }
+      }, [
+        'account',
+        'amount',
+        'currency',
+        'timestamp',
+        'description',
+        'availableCredit'
+      ], {
+        sort: {
+          timestamp: -1
+        }
       }, (error, expenses) => {
         if (error) {
           reject(error)
@@ -169,6 +180,17 @@ class Expenses extends EventEmitter {
         timestamp: {
           $gte: s,
           $lt: e
+        }
+      }, [
+        'account',
+        'amount',
+        'currency',
+        'timestamp',
+        'description',
+        'availableCredit'
+      ], {
+        sort: {
+          timestamp: -1
         }
       }, (error, expenses) => {
         if (error) {
