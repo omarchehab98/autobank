@@ -1,9 +1,3 @@
-var msg = '';
-
-msg = `Hello world`;
-describe(msg, function () {
-	msg = `Have not gotten around to this yet.`;
-	it(msg, function () {
-
-	});
-});
+/* eslint-disable */
+require('./expenses').default
+require('./mail').default

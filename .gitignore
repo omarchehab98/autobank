@@ -1,2 +1,5 @@
 node_modules
-npm-debug.log
+*.log
+logs
+credentials.json
+dist
