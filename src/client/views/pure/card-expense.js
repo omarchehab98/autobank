@@ -2,33 +2,47 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import {
-  Card, CardHeader, CardText
+  Card, CardHeader, CardText, CardActions
 } from 'material-ui/Card'
+import IconButton from 'material-ui/IconButton'
+import FontIcon from 'material-ui/FontIcon'
 
 function CardExpense (props) {
   const amount = props.amount + ' ' + props.currency
   const time = moment(props.timestamp * 1000).fromNow()
+  const hidden = props.account.length - 4
+  const account = '*'.repeat(hidden) + props.account.substring(hidden)
   return (
     <Card style={{margin: '10px 0'}}>
       <CardHeader
         title={amount}
         titleColor={props.amount <= 0 ? '#933' : '#393'}
-        subtitle={time}
+        subtitle={props.description}
         actAsExpander={true}
         showExpandableButton={true}
       />
       <CardText expandable={true}>
-        <div className="card-expense-account">
-          Account {'*'.repeat(12) + props.account.substring(12)}
-        </div>
+        {props.account && <div>
+          Account {account}
+        </div>}
         {props.availableCredit &&
-        <div className="card-expense-availablecredit">
+        <div>
           Available Credit {props.availableCredit + ' ' + props.currency}
         </div>}
-        <div className="card-expense-description">
-          {props.description}
+        <div>
+          {time}
         </div>
       </CardText>
+      <CardActions>
+        <IconButton
+          tooltip="Delete"
+          tooltipPosition="bottom-center">
+          <FontIcon className="material-icons"
+            color="#444">
+            delete
+          </FontIcon>
+        </IconButton>
+      </CardActions>
       </Card>
   )
 }
