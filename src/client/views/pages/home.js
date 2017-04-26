@@ -13,10 +13,21 @@ export default class HomePage extends Component {
   }
 
   componentWillMount () {
+    const byTimestampDesc = (x1, x2) => {
+      return x1.timestamp < x2.timestamp
+    }
     server.getExpenses(0, Date.now())
-      .then(expenses => this.setState({
-        expenses
-      }))
+      .then(expenses => this.setState(prev => ({
+        expenses: prev.expenses
+          .concat(expenses)
+          .sort(byTimestampDesc)
+      })))
+    server.getIncome(0, Date.now())
+      .then(income => this.setState(prev => ({
+        expenses: prev.expenses
+          .concat(income)
+          .sort(byTimestampDesc)
+      })))
   }
 
   render () {
