@@ -32,9 +32,29 @@ export default class HomePage extends Component {
       })))
   }
 
+  handleEditExpense = (id, changes) => {
+    const byTimestampDesc = (x1, x2) => {
+      return x2.timestamp - x1.timestamp
+    }
+    this.setState(prev => ({
+      expenses: prev.expenses
+        .map(x => {
+          if (x.id === id) {
+            x = Object.assign(x, {
+              description: changes.description,
+              timestamp: changes.timestamp
+            })
+          }
+          return x
+        })
+        .sort(byTimestampDesc)
+    }))
+  }
+
   handleDeleteExpense = id => {
     this.setState(prev => ({
-      expenses: prev.expenses.filter(x => x.id !== id)
+      expenses: prev.expenses
+        .filter(x => x.id !== id)
     }))
   }
 
@@ -45,6 +65,7 @@ export default class HomePage extends Component {
           <CardExpense
             key={expense.id}
             {...expense}
+            onEdit={this.handleEditExpense}
             onDelete={this.handleDeleteExpense}
           />)}
       </div>

@@ -24,6 +24,10 @@ function API (options, dependencies) {
     setCORS,
     expenses.removeController(dependencies.expenses, expenseModel)
   ])
+  app.post(`${path}/expenses/expenses/:id/edit`, [
+    setCORS,
+    expenses.editController(dependencies.expenses, expenseModel)
+  ])
 
   app.get(`${path}/expenses/income`, [
     setCORS,
@@ -32,6 +36,10 @@ function API (options, dependencies) {
   app.get(`${path}/expenses/income/:id/delete`, [
     setCORS,
     income.removeController(dependencies.expenses, incomeModel)
+  ])
+  app.post(`${path}/expenses/income/:id/edit`, [
+    setCORS,
+    income.editController(dependencies.expenses, incomeModel)
   ])
 
   app.listen(port)

@@ -44,6 +44,7 @@ function getController (expenses, expenseModel) {
       })
   }
 }
+
 /**
  * Generates a controller for a REST API endpoint.
  * @param {Object} expenses
@@ -54,15 +55,7 @@ function removeController (expenses, expenseModel) {
    * Deletes a certain expense entry identified by `id`.
    */
   return function (req, res) {
-    // Validation
     const id = req.params.id
-    if (!id) {
-      res.status(400)
-      res.json({
-        code: 'REQUIRE_ID'
-      })
-      return
-    }
     // Response
     expenses.removeExpense(id)
       .then(result => res.json({}))
@@ -76,7 +69,66 @@ function removeController (expenses, expenseModel) {
   }
 }
 
+/**
+ * Generates a controller for a REST API endpoint.
+ * @param {Object} expenses
+ * @param {Function} expenseModel
+ */
+function editController (expenses, expenseModel) {
+  /**
+   * Edits fields of a certain expense by `id`.
+   */
+  return function (req, res) {
+    // Validation
+    const id = req.params.id
+    if (!id) {
+      res.status(400)
+      res.json({
+        code: 'REQUIRE_ID'
+      })
+      return
+    }
+    const description = req.query.description
+    if (description === undefined) {
+      res.status(400)
+      res.json({
+        code: 'REQUIRE_DESCRIPTION'
+      })
+      return
+    }
+    const timestamp = parseInt(req.query.timestamp, 10)
+    if (isNaN(timestamp)) {
+      res.status(400)
+      res.json({
+        code: 'REQUIRE_TIMESTAMP'
+      })
+      return
+    }
+    if (timestamp < 0 || timestamp > Date.now()) {
+      res.status(400)
+      res.json({
+        code: 'INVALID_TIMESTAMP'
+      })
+      return
+    }
+    // Response
+    expenses.editExpense(id, {
+      description,
+      timestamp
+    })
+      .then(result => res.json({}))
+      .catch(result => {
+        res.status(500)
+        res.json({
+          code: 'INTERNAL_ERROR'
+        })
+        console.error(result)
+      })
+  }
+}
+
 module.exports = {
   getController,
-  removeController
+  removeController,
+  editController
 }

@@ -180,6 +180,34 @@ class Expenses extends EventEmitter {
   }
 
   /**
+   * Edits a specific expense entry given an `id`.
+   *
+   * Returns a promise that resolves if the entry is editted and rejects
+   * if no edit took place.
+   * @param {string} id
+   * @param {Object} changes
+   * @param {string} changes.description
+   * @param {number} changes.timestamp
+   * @return {Promise}
+   */
+  editExpense (id, changes) {
+    return new Promise((resolve, reject) => {
+      Expense.update({
+        _id: id
+      }, {
+        description: changes.description,
+        timestamp: changes.timestamp
+      }, (error) => {
+        if (error) {
+          reject(error)
+        } else {
+          resolve()
+        }
+      })
+    })
+  }
+
+  /**
    * Inserts an income entry into the mongo database.
    * Requires `i` to follow the Income model interface.
    * @param  {Object} i
@@ -238,6 +266,34 @@ class Expenses extends EventEmitter {
     return new Promise((resolve, reject) => {
       Income.remove({
         _id: id
+      }, (error) => {
+        if (error) {
+          reject(error)
+        } else {
+          resolve()
+        }
+      })
+    })
+  }
+
+  /**
+   * Edits a specific income entry given an `id`.
+   *
+   * Returns a promise that resolves if the entry is editted and rejects
+   * if no edit took place.
+   * @param {string} id
+   * @param {Object} changes
+   * @param {string} changes.description
+   * @param {number} changes.timestamp
+   * @return {Promise}
+   */
+  editIncome (id, changes) {
+    return new Promise((resolve, reject) => {
+      Income.update({
+        _id: id
+      }, {
+        description: changes.description,
+        timestamp: changes.timestamp
       }, (error) => {
         if (error) {
           reject(error)

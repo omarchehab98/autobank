@@ -10,38 +10,127 @@ import FontIcon from 'material-ui/FontIcon'
 import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
 import CircularProgress from 'material-ui/CircularProgress'
+import TextField from 'material-ui/TextField'
+import DatePicker from 'material-ui/DatePicker'
+import TimePicker from 'material-ui/TimePicker'
 
 class CardExpense extends Component {
   state = {
     loading: 0,
+    EditDialog: {
+      isOpen: false,
+      description: this.props.description,
+      timestamp: this.props.timestamp * 1000
+    },
     DeleteDialog: {
       isOpen: false
     }
   }
 
-  DeleteDialog = {
+  EditDialog = {
     handleClose: () => {
-      this.setState({
-        DeleteDialog: {
-          isOpen: false
+      this.setState(prev => ({
+        EditDialog: Object.assign(prev.EditDialog, {
+          isOpen: false,
+          description: this.props.description,
+          timestamp: this.props.timestamp * 1000
+        })
+      }))
+    },
+
+    handleOpen: () => {
+      this.setState(prev => ({
+        EditDialog: Object.assign(prev.EditDialog, {
+          isOpen: true
+        })
+      }))
+    },
+
+    handleEditDescription: (event, description) => {
+      this.setState(prev => ({
+        EditDialog: Object.assign(prev.EditDialog, {
+          description: description
+        })
+      }))
+    },
+
+    handleEditTimestamp: (isPickingTime, event, date) => {
+      this.setState(prev => {
+        const newDate = new Date(prev.EditDialog.timestamp)
+        if (isPickingTime) {
+          const hours = date.getHours()
+          const minutes = date.getMinutes()
+          console.log(hours, minutes)
+          newDate.setHours(hours)
+          newDate.setMinutes(minutes)
+        } else {
+          const day = date.getDate()
+          const month = date.getMonth()
+          const year = date.getFullYear()
+          newDate.setDate(day)
+          newDate.setMonth(month)
+          newDate.setFullYear(year)
+        }
+        return {
+          EditDialog: Object.assign(prev.EditDialog, {
+            timestamp: newDate.getTime()
+          })
         }
       })
     },
 
-    handleOpen: () => {
-      this.setState({
-        DeleteDialog: {
-          isOpen: true
-        }
+    handleSave: () => {
+      this.setState(prev => ({
+        loading: prev.loading + 1,
+        EditDialog: Object.assign(prev.EditDialog, {
+          isOpen: false
+        })
+      }))
+      const changes = Object.assign({},
+        this.state.EditDialog, {
+          timestamp: Math.floor(this.state.EditDialog.timestamp / 1000)
+        })
+      let promise
+      switch (this.props.type) {
+        case 'expense':
+          promise = server.editExpense(this.props.id, changes)
+          break
+        case 'income':
+          promise = server.editIncome(this.props.id, changes)
+          break
+      }
+      promise.then(() => {
+        this.setState(prev => ({
+          loading: prev.loading - 1
+        }))
+        this.props.onEdit(this.props.id, changes)
       })
+    }
+  }
+
+  DeleteDialog = {
+    handleClose: () => {
+      this.setState(prev => ({
+        DeleteDialog: Object.assign(prev.DeleteDialog, {
+          isOpen: false
+        })
+      }))
+    },
+
+    handleOpen: () => {
+      this.setState(prev => ({
+        DeleteDialog: Object.assign(prev.DeleteDialog, {
+          isOpen: true
+        })
+      }))
     },
 
     handleDelete: () => {
       this.setState(prev => ({
         loading: prev.loading + 1,
-        DeleteDialog: {
+        DeleteDialog: Object.assign(prev.DeleteDialog, {
           isOpen: false
-        }
+        })
       }))
       let promise
       switch (this.props.type) {
@@ -92,6 +181,50 @@ class CardExpense extends Component {
         </CardText>
 
         <CardActions>
+          {/* Edit */}
+          <IconButton
+            tooltip="Edit"
+            tooltipPosition="bottom-center"
+            onTouchTap={this.EditDialog.handleOpen}>
+            <FontIcon className="material-icons"
+              color="#444">
+              edit
+            </FontIcon>
+          </IconButton>
+
+          <Dialog
+            modal={false}
+            open={this.state.EditDialog.isOpen}
+            onReqeustClose={this.EditDialog.handleClose}
+            actions={[
+              <FlatButton
+                label="Cancel"
+                primary={true}
+                onTouchTap={this.EditDialog.handleClose}
+              />,
+              <FlatButton
+                label="Save"
+                primary={true}
+                onTouchTap={this.EditDialog.handleSave}
+              />
+            ]}
+          >
+            <TextField
+              value={this.state.EditDialog.description}
+              onChange={this.EditDialog.handleEditDescription}/>
+            <DatePicker
+              minDate={new Date(0)}
+              maxDate={new Date()}
+              value={new Date(this.state.EditDialog.timestamp)}
+              onChange={this.EditDialog.handleEditTimestamp.bind(this, false)}
+            />
+            <TimePicker
+              value={new Date(this.state.EditDialog.timestamp)}
+              onChange={this.EditDialog.handleEditTimestamp.bind(this, true)}
+            />
+          </Dialog>
+
+          {/* Delete */}
           <IconButton
             tooltip="Delete"
             tooltipPosition="bottom-center"
@@ -101,8 +234,6 @@ class CardExpense extends Component {
               delete
             </FontIcon>
           </IconButton>
-
-          {this.state.loading && <CircularProgress />}
 
           <Dialog
             modal={false}
@@ -123,6 +254,16 @@ class CardExpense extends Component {
           >
             Delete expense {this.props.description}?
           </Dialog>
+
+          {this.state.loading &&
+          <CircularProgress
+              size={24}
+              style={{
+                float: 'right',
+                padding: 12,
+                margin: 0
+              }}
+          />}
         </CardActions>
       </Card>
     )
@@ -138,6 +279,7 @@ CardExpense.propTypes = {
   account: PropTypes.string,
   availableCredit: PropTypes.number,
   description: PropTypes.string,
+  onEdit: PropTypes.func,
   onDelete: PropTypes.func
 }
 
