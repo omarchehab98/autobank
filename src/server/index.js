@@ -1,3 +1,7 @@
+process.on('uncaughtException', function(e) {
+  console.error(e)
+})
+
 // eslint-disable-next-line import/no-unresolved
 const credentials = require('./credentials.json')
 
