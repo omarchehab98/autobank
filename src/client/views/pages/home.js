@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import CardExpense from 'views/components/card-expense.js'
 import server from 'views/helpers/network.js'
 import './home.scss'
+import Chip from 'material-ui/Chip'
 
 export default class HomePage extends Component {
   state = {
@@ -59,15 +60,31 @@ export default class HomePage extends Component {
   }
 
   render () {
+    let prevDay
     return (
       <div className="home">
-        {this.state.expenses.map(expense =>
-          <CardExpense
-            key={expense.id}
-            {...expense}
-            onEdit={this.handleEditExpense}
-            onDelete={this.handleDeleteExpense}
-          />)}
+        {this.state.expenses.map(expense => {
+          const currDate = new Date(expense.timestamp * 1000)
+          const currDay = currDate.getDate()
+          let divider
+          if (!prevDay || prevDay !== currDay) {
+            divider = (
+              <Chip style={{margin: '0 auto'}}>
+                {currDate.toISOString().substring(0, 10)}
+              </Chip>
+            )
+          }
+          prevDay = currDay
+          return [
+            divider,
+            <CardExpense
+              key={expense.id}
+              {...expense}
+              onEdit={this.handleEditExpense}
+              onDelete={this.handleDeleteExpense}
+            />
+          ]
+        })}
       </div>
     )
   }
