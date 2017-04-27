@@ -17,7 +17,9 @@ module.exports = env => {
         'react-router-dom',
         'prop-types',
         'material-ui',
-        'react-tap-event-plugin'
+        'react-tap-event-plugin',
+        'react-chartjs-2',
+        'chart.js'
       ]
     },
     output: {

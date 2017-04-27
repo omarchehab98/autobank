@@ -13,6 +13,7 @@ import CircularProgress from 'material-ui/CircularProgress'
 import TextField from 'material-ui/TextField'
 import DatePicker from 'material-ui/DatePicker'
 import TimePicker from 'material-ui/TimePicker'
+import {colorMoney} from 'views/helpers/colors.js'
 
 class CardExpense extends Component {
   state = {
@@ -159,7 +160,7 @@ class CardExpense extends Component {
       <Card style={{margin: '10px 0'}}>
         <CardHeader
           title={amount}
-          titleColor={this.props.amount <= 0 ? '#933' : '#393'}
+          titleColor={colorMoney(this.props.amount)}
           subtitle={this.props.description}
           actAsExpander={true}
           showExpandableButton={true}
