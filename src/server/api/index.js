@@ -1,8 +1,8 @@
 const express = require('express')
 const app = express()
-const expensesController = require('./controllers/expenses.js')
+const expenses = require('./controllers/expenses.js')
 const expenseModel = require('./models/expense.js')
-const incomeController = require('./controllers/income.js')
+const income = require('./controllers/income.js')
 const incomeModel = require('./models/income.js')
 
 /**
@@ -18,11 +18,20 @@ function API (options, dependencies) {
 
   app.get(`${path}/expenses/expenses`, [
     setCORS,
-    expensesController(dependencies.expenses, expenseModel)
+    expenses.getController(dependencies.expenses, expenseModel)
   ])
+  app.get(`${path}/expenses/expenses/:id/delete`, [
+    setCORS,
+    expenses.removeController(dependencies.expenses, expenseModel)
+  ])
+
   app.get(`${path}/expenses/income`, [
     setCORS,
-    incomeController(dependencies.expenses, incomeModel)
+    income.getController(dependencies.expenses, incomeModel)
+  ])
+  app.get(`${path}/expenses/income/:id/delete`, [
+    setCORS,
+    income.removeController(dependencies.expenses, incomeModel)
   ])
 
   app.listen(port)

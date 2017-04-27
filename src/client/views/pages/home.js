@@ -1,40 +1,52 @@
 import React, {Component} from 'react'
-import CardExpense from 'views/pure/card-expense.js'
+import CardExpense from 'views/components/card-expense.js'
 import server from 'views/helpers/network.js'
 import './home.scss'
 
 export default class HomePage extends Component {
-  constructor (props) {
-    super(props)
-
-    this.state = {
-      expenses: []
-    }
+  state = {
+    expenses: []
   }
 
   componentWillMount () {
     const byTimestampDesc = (x1, x2) => {
-      return x1.timestamp < x2.timestamp
+      return x2.timestamp - x1.timestamp
     }
     server.getExpenses(0, Date.now())
       .then(expenses => this.setState(prev => ({
         expenses: prev.expenses
-          .concat(expenses)
+          .concat(expenses.map(expense => ({
+            type: 'expense',
+            ...expense
+          })))
           .sort(byTimestampDesc)
       })))
     server.getIncome(0, Date.now())
       .then(income => this.setState(prev => ({
         expenses: prev.expenses
-          .concat(income)
+          .concat(income.map(income => ({
+            type: 'income',
+            ...income
+          })))
           .sort(byTimestampDesc)
       })))
+  }
+
+  handleDeleteExpense = id => {
+    this.setState(prev => ({
+      expenses: prev.expenses.filter(x => x.id !== id)
+    }))
   }
 
   render () {
     return (
       <div className="home">
         {this.state.expenses.map(expense =>
-          <CardExpense {...expense}/>)}
+          <CardExpense
+            key={expense.id}
+            {...expense}
+            onDelete={this.handleDeleteExpense}
+          />)}
       </div>
     )
   }

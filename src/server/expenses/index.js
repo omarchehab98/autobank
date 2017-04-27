@@ -136,6 +136,7 @@ class Expenses extends EventEmitter {
           $lt: e
         }
       }, [
+        '_id',
         'account',
         'amount',
         'currency',
@@ -151,6 +152,28 @@ class Expenses extends EventEmitter {
           reject(error)
         } else {
           resolve(expenses)
+        }
+      })
+    })
+  }
+
+  /**
+   * Removes a specific expense entry given an `id`.
+   *
+   * Returns a promise that resolves if the entry is deleted and rejects
+   * if no deletion took place.
+   * @param {string} id
+   * @return {Promise}
+   */
+  removeExpense (id) {
+    return new Promise((resolve, reject) => {
+      Expense.remove({
+        _id: id
+      }, (error) => {
+        if (error) {
+          reject(error)
+        } else {
+          resolve()
         }
       })
     })
@@ -182,6 +205,7 @@ class Expenses extends EventEmitter {
           $lt: e
         }
       }, [
+        '_id',
         'account',
         'amount',
         'currency',
@@ -197,6 +221,28 @@ class Expenses extends EventEmitter {
           reject(error)
         } else {
           resolve(expenses)
+        }
+      })
+    })
+  }
+
+  /**
+   * Removes a specific income entry given an `id`.
+   *
+   * Returns a promise that resolves if the entry is deleted and rejects
+   * if no deletion took place.
+   * @param {string} id
+   * @return {Promise}
+   */
+  removeIncome (id) {
+    return new Promise((resolve, reject) => {
+      Income.remove({
+        _id: id
+      }, (error) => {
+        if (error) {
+          reject(error)
+        } else {
+          resolve()
         }
       })
     })

@@ -1,5 +1,6 @@
 function expenseModel (expense) {
   return {
+    id: expense._id,
     account: expense.account,
     amount: expense.amount,
     currency: expense.currency,

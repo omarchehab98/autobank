@@ -3,7 +3,7 @@
  * @param {Object} expenses
  * @param {Function} expenseModel
  */
-function expensesController (expenses, expenseModel) {
+function getController (expenses, expenseModel) {
   /**
    * Returns all expenses that happened during a time range.
    *
@@ -44,5 +44,39 @@ function expensesController (expenses, expenseModel) {
       })
   }
 }
+/**
+ * Generates a controller for a REST API endpoint.
+ * @param {Object} expenses
+ * @param {Function} expenseModel
+ */
+function removeController (expenses, expenseModel) {
+  /**
+   * Deletes a certain expense entry identified by `id`.
+   */
+  return function (req, res) {
+    // Validation
+    const id = req.params.id
+    if (!id) {
+      res.status(400)
+      res.json({
+        code: 'REQUIRE_ID'
+      })
+      return
+    }
+    // Response
+    expenses.removeExpense(id)
+      .then(result => res.json({}))
+      .catch(result => {
+        res.status(500)
+        res.json({
+          code: 'INTERNAL_ERROR'
+        })
+        console.error(result)
+      })
+  }
+}
 
-module.exports = expensesController
+module.exports = {
+  getController,
+  removeController
+}

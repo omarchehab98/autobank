@@ -3,7 +3,7 @@
  * @param {Object} expenses
  * @param {Function} incomeModel
  */
-function incomeController (expenses, incomeModel) {
+function getController (expenses, incomeModel) {
   /**
    * Returns all income that happened during a time range.
    *
@@ -45,4 +45,39 @@ function incomeController (expenses, incomeModel) {
   }
 }
 
-module.exports = incomeController
+/**
+ * Generates a controller for a REST API endpoint.
+ * @param {Object} expenses
+ * @param {Function} incomeModel
+ */
+function removeController (expenses, incomemodel) {
+  /**
+   * Deletes a certain income entry identified by `id`.
+   */
+  return function (req, res) {
+    // Validation
+    const id = req.params.id
+    if (!id) {
+      res.status(400)
+      res.json({
+        code: 'REQUIRE_ID'
+      })
+      return
+    }
+    // Response
+    expenses.removeIncome(id)
+      .then(result => res.json({}))
+      .catch(result => {
+        res.status(500)
+        res.json({
+          code: 'INTERNAL_ERROR'
+        })
+        console.error(result)
+      })
+  }
+}
+
+module.exports = {
+  getController,
+  removeController
+}
