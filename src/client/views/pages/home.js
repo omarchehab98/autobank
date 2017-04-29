@@ -12,23 +12,39 @@ import {
 import moment from 'moment'
 import {colorMoney, hashHSL} from 'views/helpers/colors.js'
 
+/**
+ * Helper function used like `reduce(toCategory, {})` on `expenses` or `income`
+ * @param {Object} categories
+ * @param {Object} x
+ */
+function toCategory (categories, x) {
+    const key = x.category || 'Other'
+    if (!categories[key]) {
+      categories[key] = 0
+    }
+    categories[key] += x.amount
+    return categories
+}
+
 export default class HomePage extends Component {
   state = {
     expenses: [],
     balance: 0,
     weekly: {
-      income: [0, 0, 0, 0, 0, 0, 0],
+      start: moment().startOf('week'),
       totalIncome: 0,
-      expenses: [0, 0, 0, 0, 0, 0, 0],
       totalExpenses: 0,
-      start: moment().startOf('week')
+      // bar chart
+      income: [0, 0, 0, 0, 0, 0, 0],
+      expenses: [0, 0, 0, 0, 0, 0, 0],
     },
     monthly: {
-      income: {},
+      start: moment().startOf('month'),
       totalIncome: 0,
-      expenses: {},
       totalExpenses: 0,
-      start: moment().startOf('month')
+      // pie chart
+      income: {},
+      expenses: {},
     }
   }
 
@@ -46,8 +62,7 @@ export default class HomePage extends Component {
           .sort(byTimestampDesc)
         this.setState({
           expenses: newExpenses
-        })
-        this.analyzeExpenses(newExpenses)
+        }, this.analyzeExpenses)
       })
     server.getIncome(0, Date.now())
       .then(income => {
@@ -59,12 +74,11 @@ export default class HomePage extends Component {
           .sort(byTimestampDesc)
         this.setState({
           expenses: newExpenses
-        })
-        this.analyzeExpenses(newExpenses)
+        }, this.analyzeExpenses)
       })
   }
 
-  analyzeExpenses (expenses) {
+  analyzeExpenses () {
     // Total
     const balance = Math.round(this.state.expenses
       .reduce((s, x) => s + x.amount, 0))
@@ -81,7 +95,7 @@ export default class HomePage extends Component {
       return days
     }
 
-    const weeklyIncome = expenses
+    const weeklyIncome = this.state.expenses
       .filter(x => x.timestamp >= weekStart && x.timestamp < weekEnd)
       .filter(x => x.amount > 0)
       .map(x => ({...x, amount: Math.round(x.amount)}))
@@ -90,7 +104,7 @@ export default class HomePage extends Component {
     const totalWeeklyIncome = weeklyIncome
       .reduce((s, x) => s + x, 0)
 
-    const weeklyExpenses = expenses
+    const weeklyExpenses = this.state.expenses
       .filter(x => x.timestamp >= weekStart && x.timestamp < weekEnd)
       .filter(x => x.amount < 0)
       .map(x => ({...x, amount: Math.round(x.amount)}))
@@ -103,16 +117,7 @@ export default class HomePage extends Component {
     const monthStart = this.state.monthly.start.unix()
     const monthEnd = moment(monthStart).endOf('month')
 
-    const toCategory = (categories, x) => {
-      const key = x.category || 'Other'
-      if (!categories[key]) {
-        categories[key] = 0
-      }
-      categories[key] += x.amount
-      return categories
-    }
-
-    let monthlyIncome = expenses
+    let monthlyIncome = this.state.expenses
       .filter(x => x.timestamp >= monthStart && x.timestamp < monthEnd)
       .filter(x => x.amount > 0)
       .map(x => ({...x, amount: Math.round(x.amount)}))
@@ -123,7 +128,7 @@ export default class HomePage extends Component {
     monthlyIncome = monthlyIncome
       .reduce(toCategory, {})
 
-    let monthlyExpenses = expenses
+    let monthlyExpenses = this.state.expenses
       .filter(x => x.timestamp >= monthStart && x.timestamp < monthEnd)
       .filter(x => x.amount < 0)
       .map(x => ({...x, amount: Math.round(x.amount)}))
@@ -137,18 +142,20 @@ export default class HomePage extends Component {
 
     this.setState(prev => ({
       balance,
-      weekly: Object.assign(prev.weekly, {
+      weekly: {
+        ...prev.weekly,
         income: weeklyIncome,
         expenses: weeklyExpenses,
         totalIncome: totalWeeklyIncome,
         totalExpenses: totalWeeklyExpenses
-      }),
-      monthly: Object.assign(prev.monthly, {
+      },
+      monthly: {
+        ...prev.monthly,
         income: monthlyIncome,
         expenses: monthlyExpenses,
         totalIncome: totalMonthlyIncome,
         totalExpenses: totalMonthlyExpenses
-      })
+      }
     }))
   }
 
@@ -160,15 +167,17 @@ export default class HomePage extends Component {
       expenses: prev.expenses
         .map(x => {
           if (x.id === id) {
-            x = Object.assign(x, {
+            x = {
+              ...x,
               description: changes.description,
-              timestamp: changes.timestamp
-            })
+              timestamp: changes.timestamp,
+              category: changes.category
+            }
           }
           return x
         })
         .sort(byTimestampDesc)
-    }))
+    }), this.analyzeExpenses)
   }
 
   handleDeleteExpense = id => {
@@ -281,6 +290,7 @@ export default class HomePage extends Component {
             <CardExpense
               key={expense.id}
               {...expense}
+              categories={Object.keys(this.state.expenses.reduce(toCategory, {}))}
               onEdit={this.handleEditExpense}
               onDelete={this.handleDeleteExpense}
             />

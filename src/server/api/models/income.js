@@ -6,7 +6,8 @@ function incomeModel (income) {
     currency: income.currency,
     timestamp: income.timestamp,
     description: income.description,
-    availableCredit: income.availableCredit
+    availableCredit: income.availableCredit,
+    category: income.category
   }
 }
 

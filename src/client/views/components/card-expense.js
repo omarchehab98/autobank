@@ -14,6 +14,7 @@ import TextField from 'material-ui/TextField'
 import DatePicker from 'material-ui/DatePicker'
 import TimePicker from 'material-ui/TimePicker'
 import {colorMoney} from 'views/helpers/colors.js'
+import AutoComplete from 'material-ui/AutoComplete';
 
 class CardExpense extends Component {
   state = {
@@ -21,7 +22,8 @@ class CardExpense extends Component {
     EditDialog: {
       isOpen: false,
       description: this.props.description,
-      timestamp: this.props.timestamp * 1000
+      timestamp: this.props.timestamp * 1000,
+      category: this.props.category
     },
     DeleteDialog: {
       isOpen: false
@@ -50,7 +52,7 @@ class CardExpense extends Component {
     handleEditDescription: (event, description) => {
       this.setState(prev => ({
         EditDialog: Object.assign(prev.EditDialog, {
-          description: description
+          description
         })
       }))
     },
@@ -78,6 +80,14 @@ class CardExpense extends Component {
           })
         }
       })
+    },
+
+    handleEditCategory: (category) => {
+      this.setState(prev => ({
+        EditDialog: Object.assign(prev.EditDialog, {
+          category
+        })
+      }))
     },
 
     handleSave: () => {
@@ -210,21 +220,34 @@ class CardExpense extends Component {
               />
             ]}
           >
+            <AutoComplete
+              hintText="Category"
+              searchText={this.state.EditDialog.category}
+              onUpdateInput={this.EditDialog.handleEditCategory}
+              dataSource={this.props.categories}
+              filter={AutoComplete.caseInsensitiveFilter}
+              openOnFocus={true}
+              fullWidth={true}
+            />
             <TextField
               hintText="Description"
               value={this.state.EditDialog.description}
-              onChange={this.EditDialog.handleEditDescription}/>
+              onChange={this.EditDialog.handleEditDescription}
+              fullWidth={true}
+            />
             <DatePicker
               hintText="Date"
               minDate={new Date(0)}
               maxDate={new Date()}
               value={new Date(this.state.EditDialog.timestamp)}
               onChange={this.EditDialog.handleEditTimestamp.bind(this, false)}
+              fullWidth={true}
             />
             <TimePicker
               hintText="Time"
               value={new Date(this.state.EditDialog.timestamp)}
               onChange={this.EditDialog.handleEditTimestamp.bind(this, true)}
+              fullWidth={true}
             />
           </Dialog>
 
@@ -283,8 +306,10 @@ CardExpense.propTypes = {
   account: PropTypes.string,
   availableCredit: PropTypes.number,
   description: PropTypes.string,
+  category: PropTypes.string,
   onEdit: PropTypes.func,
-  onDelete: PropTypes.func
+  onDelete: PropTypes.func,
+  categories: PropTypes.array
 }
 
 export default CardExpense

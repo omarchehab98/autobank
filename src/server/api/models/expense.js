@@ -6,7 +6,8 @@ function expenseModel (expense) {
     currency: expense.currency,
     timestamp: expense.timestamp,
     description: expense.description,
-    availableCredit: expense.availableCredit
+    availableCredit: expense.availableCredit,
+    category: expense.category
   }
 }
 

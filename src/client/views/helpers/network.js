@@ -4,10 +4,10 @@ const url = 'http://localhost:3001/v1'
 const endpoints = {
   getExpenses: (start, end) => `${url}/expenses/expenses?start=${start}&end=${end}`,
   removeExpense: id => `${url}/expenses/expenses/${id}/delete`,
-  editExpense: (id, changes) => `${url}/expenses/expenses/${id}/edit?description=${esc(changes.description)}&timestamp=${changes.timestamp}`,
+  editExpense: (id) => `${url}/expenses/expenses/${id}/edit`,
   getIncome: (start, end) => `${url}/expenses/income?start=${start}&end=${end}`,
   removeIncome: id => `${url}/expenses/income/${id}/delete`,
-  editIncome: (id, changes) => `${url}/expenses/income/${id}/edit?description=${esc(changes.description)}&timestamp=${changes.timestamp}`
+  editIncome: (id) => `${url}/expenses/income/${id}/edit`
 }
 
 const NetworkFacade = {
@@ -25,8 +25,17 @@ const NetworkFacade = {
 
   editExpense: function (id, changes) {
     const endpoint = endpoints.editExpense(id, changes)
+    let queryString = '';
+    for (const key in changes) {
+      queryString += esc(key) + '=' + esc(changes[key]) + '&'
+    }
     return window.fetch(endpoint, {
-      method: 'POST'
+      method: 'POST',
+      headers: {
+        'Accept': '*/*',
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: queryString.substr(0, queryString.length - 1)
     }).then(res => res.json())
   },
 
@@ -44,8 +53,17 @@ const NetworkFacade = {
 
   editIncome: function (id, changes) {
     const endpoint = endpoints.editIncome(id, changes)
+    let queryString = '';
+    for (const key in changes) {
+      queryString += esc(key) + '=' + esc(changes[key]) + '&'
+    }
     return window.fetch(endpoint, {
-      method: 'POST'
+      method: 'POST',
+      headers: {
+        'Accept': '*/*',
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: queryString.substr(0, queryString.length - 1)
     }).then(res => res.json())
   }
 }

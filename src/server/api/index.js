@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express()
+const bodyParser = require('body-parser')
 const expenses = require('./controllers/expenses.js')
 const expenseModel = require('./models/expense.js')
 const income = require('./controllers/income.js')
@@ -15,6 +16,8 @@ const incomeModel = require('./models/income.js')
 function API (options, dependencies) {
   const path = options.path || ''
   const port = options.port || '80'
+
+  app.use(bodyParser.urlencoded());
 
   app.get(`${path}/expenses/expenses`, [
     setCORS,

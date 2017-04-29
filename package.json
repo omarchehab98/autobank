@@ -1,8 +1,8 @@
 {
   "name": "eun",
   "version": "0.0.2",
-  "description": "My personal butler!",
-  "main": "src/main.js",
+  "description": "Automated expense tracker",
+  "main": "src/server/index.js",
   "scripts": {
     "lint": "eslint .",
     "lint-auto": "eslint --fix .",
@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/omarchehab98/eun#readme",
   "dependencies": {
+    "body-parser": "^1.17.1",
     "chart.js": "2.3",
     "express": "^4.15.2",
     "he": "^1.1.1",

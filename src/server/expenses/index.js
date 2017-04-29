@@ -142,7 +142,8 @@ class Expenses extends EventEmitter {
         'currency',
         'timestamp',
         'description',
-        'availableCredit'
+        'availableCredit',
+        'category'
       ], {
         sort: {
           timestamp: -1
@@ -188,6 +189,7 @@ class Expenses extends EventEmitter {
    * @param {Object} changes
    * @param {string} changes.description
    * @param {number} changes.timestamp
+   * @param {string} changes.category
    * @return {Promise}
    */
   editExpense (id, changes) {
@@ -196,7 +198,8 @@ class Expenses extends EventEmitter {
         _id: id
       }, {
         description: changes.description,
-        timestamp: changes.timestamp
+        timestamp: changes.timestamp,
+        category: changes.category
       }, (error) => {
         if (error) {
           reject(error)
@@ -239,7 +242,8 @@ class Expenses extends EventEmitter {
         'currency',
         'timestamp',
         'description',
-        'availableCredit'
+        'availableCredit',
+        'category'
       ], {
         sort: {
           timestamp: -1
@@ -285,6 +289,7 @@ class Expenses extends EventEmitter {
    * @param {Object} changes
    * @param {string} changes.description
    * @param {number} changes.timestamp
+   * @param {string} changes.category
    * @return {Promise}
    */
   editIncome (id, changes) {
@@ -293,7 +298,8 @@ class Expenses extends EventEmitter {
         _id: id
       }, {
         description: changes.description,
-        timestamp: changes.timestamp
+        timestamp: changes.timestamp,
+        category: changes.category
       }, (error) => {
         if (error) {
           reject(error)

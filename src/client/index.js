@@ -1,3 +1,4 @@
+import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.scss'
 
@@ -20,7 +21,7 @@ if (process.env.NODE_ENV === 'production') {
   if ('serviceWorker' in navigator && window.location.protocol === 'https:') {
     navigator.serviceWorker.register('/service-worker.js')
   }
-} else if (module.hot) {
+} else {
   module.hot.accept('./views', render)
   require('eruda').init()
 }

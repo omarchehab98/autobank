@@ -6,8 +6,9 @@ function Income (mongoose) {
     amount: Number,
     currency: String,
     timestamp: Number,
-    description: String,
-    availableCredit: Number
+    description: {type: String, default: ''},
+    availableCredit: Number,
+    category: {type: String, default: 'Other'}
   })
   return mongoose.model('Income', incomeSchema)
 }

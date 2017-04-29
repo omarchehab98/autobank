@@ -88,7 +88,7 @@ function editController (expenses, expenseModel) {
       })
       return
     }
-    const description = req.query.description
+    const description = req.body.description
     if (description === undefined) {
       res.status(400)
       res.json({
@@ -96,7 +96,7 @@ function editController (expenses, expenseModel) {
       })
       return
     }
-    const timestamp = parseInt(req.query.timestamp, 10)
+    const timestamp = parseInt(req.body.timestamp, 10)
     if (isNaN(timestamp)) {
       res.status(400)
       res.json({
@@ -111,10 +111,19 @@ function editController (expenses, expenseModel) {
       })
       return
     }
+    const category = req.body.category
+    if (category === undefined) {
+      res.status(400)
+      res.json({
+        code: 'REQUIRE_CATEGORY'
+      })
+      return
+    }
     // Response
     expenses.editExpense(id, {
       description,
-      timestamp
+      timestamp,
+      category
     })
       .then(result => res.json({}))
       .catch(result => {
