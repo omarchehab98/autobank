@@ -211,15 +211,18 @@ class CardExpense extends Component {
             ]}
           >
             <TextField
+              hintText="Description"
               value={this.state.EditDialog.description}
               onChange={this.EditDialog.handleEditDescription}/>
             <DatePicker
+              hintText="Date"
               minDate={new Date(0)}
               maxDate={new Date()}
               value={new Date(this.state.EditDialog.timestamp)}
               onChange={this.EditDialog.handleEditTimestamp.bind(this, false)}
             />
             <TimePicker
+              hintText="Time"
               value={new Date(this.state.EditDialog.timestamp)}
               onChange={this.EditDialog.handleEditTimestamp.bind(this, true)}
             />

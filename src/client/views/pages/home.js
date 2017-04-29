@@ -1,12 +1,16 @@
 import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import CardExpense from 'views/components/card-expense.js'
 import server from 'views/helpers/network.js'
 import './home.scss'
 import Card from 'material-ui/Card'
 import Chip from 'material-ui/Chip'
-import {Bar as BarChart} from 'react-chartjs-2'
+import {
+  Bar as BarChart,
+  Doughnut as DoughnutChart
+} from 'react-chartjs-2'
 import moment from 'moment'
-import {colorMoney} from 'views/helpers/colors.js'
+import {colorMoney, hashHSL} from 'views/helpers/colors.js'
 
 export default class HomePage extends Component {
   state = {
@@ -18,6 +22,13 @@ export default class HomePage extends Component {
       expenses: [0, 0, 0, 0, 0, 0, 0],
       totalExpenses: 0,
       start: moment().startOf('week')
+    },
+    monthly: {
+      income: {},
+      totalIncome: 0,
+      expenses: {},
+      totalExpenses: 0,
+      start: moment().startOf('month')
     }
   }
 
@@ -54,11 +65,16 @@ export default class HomePage extends Component {
   }
 
   analyzeExpenses (expenses) {
+    // Total
     const balance = Math.round(this.state.expenses
       .reduce((s, x) => s + x.amount, 0))
 
-    const weekStart = this.state.weekly.start.unix()
     const day = 24 * 60 * 60
+
+    // Weekly
+    const weekStart = this.state.weekly.start.unix()
+    const weekEnd = moment(weekStart).endOf('week')
+
     const toWeekDays = (days, x) => {
       const i = Math.floor((x.timestamp - weekStart) / day)
       days[i] += x.amount
@@ -66,20 +82,58 @@ export default class HomePage extends Component {
     }
 
     const weeklyIncome = expenses
-      .filter(x => x.timestamp >= weekStart && x.timestamp < weekStart + day * 7)
+      .filter(x => x.timestamp >= weekStart && x.timestamp < weekEnd)
       .filter(x => x.amount > 0)
+      .map(x => ({...x, amount: Math.round(x.amount)}))
       .reduce(toWeekDays, [0, 0, 0, 0, 0, 0, 0])
 
-    const totalWeeklyIncome = Math.round(weeklyIncome
-      .reduce((s, x) => s + x, 0))
+    const totalWeeklyIncome = weeklyIncome
+      .reduce((s, x) => s + x, 0)
 
     const weeklyExpenses = expenses
-      .filter(x => x.timestamp >= weekStart && x.timestamp < weekStart + day * 7)
+      .filter(x => x.timestamp >= weekStart && x.timestamp < weekEnd)
       .filter(x => x.amount < 0)
+      .map(x => ({...x, amount: Math.round(x.amount)}))
       .reduce(toWeekDays, [0, 0, 0, 0, 0, 0, 0])
 
-    const totalWeeklyExpenses = Math.round(weeklyExpenses
-      .reduce((s, x) => s + x, 0))
+    const totalWeeklyExpenses = weeklyExpenses
+      .reduce((s, x) => s + x, 0)
+
+    // Monthly
+    const monthStart = this.state.monthly.start.unix()
+    const monthEnd = moment(monthStart).endOf('month')
+
+    const toCategory = (categories, x) => {
+      const key = x.category || 'Other'
+      if (!categories[key]) {
+        categories[key] = 0
+      }
+      categories[key] += x.amount
+      return categories
+    }
+
+    let monthlyIncome = expenses
+      .filter(x => x.timestamp >= monthStart && x.timestamp < monthEnd)
+      .filter(x => x.amount > 0)
+      .map(x => ({...x, amount: Math.round(x.amount)}))
+
+    const totalMonthlyIncome = monthlyIncome
+      .reduce((s, x) => s + x.amount, 0)
+
+    monthlyIncome = monthlyIncome
+      .reduce(toCategory, {})
+
+    let monthlyExpenses = expenses
+      .filter(x => x.timestamp >= monthStart && x.timestamp < monthEnd)
+      .filter(x => x.amount < 0)
+      .map(x => ({...x, amount: Math.round(x.amount)}))
+
+    const totalMonthlyExpenses = monthlyExpenses
+      .reduce((s, x) => s + x.amount, 0)
+
+    monthlyExpenses = monthlyExpenses
+      .map(x => ({...x, amount: Math.abs(x.amount)}))
+      .reduce(toCategory, {})
 
     this.setState(prev => ({
       balance,
@@ -88,6 +142,12 @@ export default class HomePage extends Component {
         expenses: weeklyExpenses,
         totalIncome: totalWeeklyIncome,
         totalExpenses: totalWeeklyExpenses
+      }),
+      monthly: Object.assign(prev.monthly, {
+        income: monthlyIncome,
+        expenses: monthlyExpenses,
+        totalIncome: totalMonthlyIncome,
+        totalExpenses: totalMonthlyExpenses
       })
     }))
   }
@@ -122,6 +182,7 @@ export default class HomePage extends Component {
     let prevDay
     return (
       <div className="home">
+        {/* Total */}
         <Card style={{margin: '10px 0', padding: '16px'}}>
           <div style={{display: 'flex', textAlign: 'center'}}>
             <MoneySum
@@ -130,6 +191,11 @@ export default class HomePage extends Component {
               value={this.state.balance}
               currency="CAD"
             />
+          </div>
+        </Card>
+        {/* Weekly */}
+        <Card style={{margin: '10px 0', padding: '16px'}}>
+          <div style={{display: 'flex', textAlign: 'center'}}>
             <MoneySum
               title="Income"
               subtitle="(week)"
@@ -171,6 +237,32 @@ export default class HomePage extends Component {
             }}
           />
         </Card>
+        {/* Monthly */}
+        <Card style={{margin: '10px 0', padding: '16px'}}>
+          <div style={{display: 'flex', textAlign: 'center'}}>
+            <MoneySum
+              title="Income"
+              subtitle="(month)"
+              value={this.state.monthly.totalIncome}
+              currency="CAD"
+            />
+            <MoneySum
+              title="Expenses"
+              subtitle="(month)"
+              value={this.state.monthly.totalExpenses}
+              currency="CAD"
+            />
+          </div>
+          <DoughnutChart
+            data={{
+              labels: Object.keys(this.state.monthly.expenses),
+              datasets: [{
+                data: Object.values(this.state.monthly.expenses),
+                backgroundColor: Object.keys(this.state.monthly.expenses).map(s => hashHSL(s, '75%', '40%'))
+              }]
+            }}
+          />
+        </Card>
 
         {this.state.expenses.map(expense => {
           const currDate = moment(expense.timestamp * 1000)
@@ -199,7 +291,7 @@ export default class HomePage extends Component {
   }
 }
 
-function MoneySum(props) {
+function MoneySum (props) {
   return (
     <div style={{display: 'inline-block', flexGrow: 1}}>
       <h3 style={{marginTop: 5, marginBottom: 0, fontWeight: 'normal'}}>
@@ -213,4 +305,11 @@ function MoneySum(props) {
       </span>
     </div>
   )
+}
+
+MoneySum.propTypes = {
+  title: PropTypes.string,
+  subtitle: PropTypes.string,
+  value: PropTypes.number,
+  currency: PropTypes.string
 }
