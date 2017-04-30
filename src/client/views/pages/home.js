@@ -11,6 +11,7 @@ import {
 } from 'react-chartjs-2'
 import moment from 'moment'
 import {colorMoney, hashHSL} from 'views/helpers/colors.js'
+import {map} from 'lodash'
 
 /**
  * Helper function used like `reduce(toCategory, {})` on `expenses` or `income`
@@ -18,18 +19,20 @@ import {colorMoney, hashHSL} from 'views/helpers/colors.js'
  * @param {Object} x
  */
 function toCategory (categories, x) {
-    const key = x.category || 'Other'
-    if (!categories[key]) {
-      categories[key] = 0
-    }
-    categories[key] += x.amount
-    return categories
+  const key = x.category || 'Other'
+  if (!categories[key]) {
+    categories[key] = 0
+  }
+  categories[key] += x.amount
+  return categories
 }
 
 export default class HomePage extends Component {
   state = {
+    // overall
     expenses: [],
-    balance: 0,
+    accountBalances: {},
+    // weekly data
     weekly: {
       start: moment().startOf('week'),
       totalIncome: 0,
@@ -38,6 +41,7 @@ export default class HomePage extends Component {
       income: [0, 0, 0, 0, 0, 0, 0],
       expenses: [0, 0, 0, 0, 0, 0, 0],
     },
+    // monthly data
     monthly: {
       start: moment().startOf('month'),
       totalIncome: 0,
@@ -80,8 +84,18 @@ export default class HomePage extends Component {
 
   analyzeExpenses () {
     // Total
-    const balance = Math.round(this.state.expenses
-      .reduce((s, x) => s + x.amount, 0))
+    function toAccount (accounts, x) {
+      const key = x.account
+      if (!accounts[key]) {
+        accounts[key] = 0
+      }
+      accounts[key] += x.amount
+      return accounts
+    }
+
+    const accountBalances = this.state.expenses
+      .map(x => ({...x, amount: Math.round(x.amount)}))
+      .reduce(toAccount, {})
 
     const day = 24 * 60 * 60
 
@@ -141,7 +155,7 @@ export default class HomePage extends Component {
       .reduce(toCategory, {})
 
     this.setState(prev => ({
-      balance,
+      accountBalances,
       weekly: {
         ...prev.weekly,
         income: weeklyIncome,
@@ -184,7 +198,7 @@ export default class HomePage extends Component {
     this.setState(prev => ({
       expenses: prev.expenses
         .filter(x => x.id !== id)
-    }))
+    }), this.analyzeExpenses)
   }
 
   render () {
@@ -194,12 +208,14 @@ export default class HomePage extends Component {
         {/* Total */}
         <Card style={{margin: '10px 0', padding: '16px'}}>
           <div style={{display: 'flex', textAlign: 'center'}}>
+            {map(this.state.accountBalances, (balance, account) =>
             <MoneySum
+              key={account}
               title="Balance"
-              subtitle="(total)"
-              value={this.state.balance}
+              subtitle={'(' + account.substring(account.length - 4, account.length) + ')'}
+              value={balance}
               currency="CAD"
-            />
+            />)}
           </div>
         </Card>
         {/* Weekly */}
@@ -218,6 +234,7 @@ export default class HomePage extends Component {
               currency="CAD"
             />
           </div>
+          {(this.state.weekly.totalIncome - this.state.weekly.totalExpenses > 0) &&
           <BarChart
             data={{
               labels: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
@@ -244,7 +261,7 @@ export default class HomePage extends Component {
                 }]
               }
             }}
-          />
+          />}
         </Card>
         {/* Monthly */}
         <Card style={{margin: '10px 0', padding: '16px'}}>
@@ -262,7 +279,9 @@ export default class HomePage extends Component {
               currency="CAD"
             />
           </div>
-          <DoughnutChart
+          {(this.state.monthly.totalIncome - this.state.monthly.totalExpenses > 0
+            && Object.keys(this.state.monthly.expenses).length > 1)
+            && <DoughnutChart
             data={{
               labels: Object.keys(this.state.monthly.expenses),
               datasets: [{
@@ -270,7 +289,7 @@ export default class HomePage extends Component {
                 backgroundColor: Object.keys(this.state.monthly.expenses).map(s => hashHSL(s, '75%', '40%'))
               }]
             }}
-          />
+          />}
         </Card>
 
         {this.state.expenses.map(expense => {

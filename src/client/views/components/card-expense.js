@@ -177,13 +177,19 @@ class CardExpense extends Component {
         />
 
         <CardText expandable={true}>
-          {this.props.account && <div>
-            Account {account}
+          {this.props.category &&
+          <div>
+            <strong>Category</strong> {this.props.category}
+          </div>}
+
+          {this.props.account &&
+          <div>
+            <strong>Account</strong> {account}
           </div>}
 
           {this.props.availableCredit &&
           <div>
-            Available Credit {this.props.availableCredit + ' ' + this.props.currency}
+            <strong>Available Credit</strong> {this.props.availableCredit + ' ' + this.props.currency}
           </div>}
 
           <div>
