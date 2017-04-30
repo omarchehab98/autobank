@@ -39,7 +39,7 @@ export default class HomePage extends Component {
       totalExpenses: 0,
       // bar chart
       income: [0, 0, 0, 0, 0, 0, 0],
-      expenses: [0, 0, 0, 0, 0, 0, 0],
+      expenses: [0, 0, 0, 0, 0, 0, 0]
     },
     // monthly data
     monthly: {
@@ -48,7 +48,7 @@ export default class HomePage extends Component {
       totalExpenses: 0,
       // pie chart
       income: {},
-      expenses: {},
+      expenses: {}
     }
   }
 
@@ -279,9 +279,9 @@ export default class HomePage extends Component {
               currency="CAD"
             />
           </div>
-          {(this.state.monthly.totalIncome - this.state.monthly.totalExpenses > 0
-            && Object.keys(this.state.monthly.expenses).length > 1)
-            && <DoughnutChart
+          {(this.state.monthly.totalIncome - this.state.monthly.totalExpenses > 0 &&
+            Object.keys(this.state.monthly.expenses).length > 1) &&
+            <DoughnutChart
             data={{
               labels: Object.keys(this.state.monthly.expenses),
               datasets: [{

@@ -17,7 +17,7 @@ function API (options, dependencies) {
   const path = options.path || ''
   const port = options.port || '80'
 
-  app.use(bodyParser.urlencoded());
+  app.use(bodyParser.urlencoded())
 
   app.get(`${path}/expenses/expenses`, [
     setCORS,

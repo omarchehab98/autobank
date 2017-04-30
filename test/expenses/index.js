@@ -1,6 +1,6 @@
 const Expenses = require('../../src/server/expenses/index.js')
 
-const fakeMongoose = require('./fixtures/mongoose')
+const fakeMongoose = require('./mocks/mongoose')
 
 var msg
 msg = `expenses`

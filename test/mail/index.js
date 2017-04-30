@@ -1,7 +1,7 @@
 const Mailbox = require('../../src/server/mail/mailbox.js')
 
-const fakeIMAP = require('./fixtures/imap.js')
-const fakeParseMail = require('./fixtures/parseMail.js')
+const fakeIMAP = require('./mocks/imap.js')
+const fakeParseMail = require('./mocks/parseMail.js')
 
 var msg
 

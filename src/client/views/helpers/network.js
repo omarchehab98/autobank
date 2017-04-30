@@ -25,7 +25,7 @@ const NetworkFacade = {
 
   editExpense: function (id, changes) {
     const endpoint = endpoints.editExpense(id, changes)
-    let queryString = '';
+    let queryString = ''
     for (const key in changes) {
       queryString += esc(key) + '=' + esc(changes[key]) + '&'
     }
@@ -53,7 +53,7 @@ const NetworkFacade = {
 
   editIncome: function (id, changes) {
     const endpoint = endpoints.editIncome(id, changes)
-    let queryString = '';
+    let queryString = ''
     for (const key in changes) {
       queryString += esc(key) + '=' + esc(changes[key]) + '&'
     }

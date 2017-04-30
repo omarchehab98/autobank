@@ -14,7 +14,7 @@ import TextField from 'material-ui/TextField'
 import DatePicker from 'material-ui/DatePicker'
 import TimePicker from 'material-ui/TimePicker'
 import {colorMoney} from 'views/helpers/colors.js'
-import AutoComplete from 'material-ui/AutoComplete';
+import AutoComplete from 'material-ui/AutoComplete'
 
 class CardExpense extends Component {
   state = {
