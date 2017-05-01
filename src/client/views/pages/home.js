@@ -35,6 +35,11 @@ export default class HomePage extends Component {
     // weekly data
     weekly: {
       start: moment().startOf('week'),
+      labels: [0, 0, 0, 0, 0, 0, 0]
+        .map((x, i) => {
+          const t = moment().startOf('week').add(i, 'd')
+          return t.isSame(moment(), 'day') ? 'Today' : t.format('MMM D')
+        }),
       totalIncome: 0,
       totalExpenses: 0,
       // bar chart
@@ -237,7 +242,7 @@ export default class HomePage extends Component {
           {(this.state.weekly.totalIncome - this.state.weekly.totalExpenses > 0) &&
           <BarChart
             data={{
-              labels: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+              labels: this.state.weekly.labels,
               datasets: [
                 {
                   backgroundColor: colorMoney(1),
