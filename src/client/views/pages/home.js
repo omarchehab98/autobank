@@ -20,7 +20,7 @@ import FontIcon from 'material-ui/FontIcon'
  * @param {Object} categories
  * @param {Object} x
  */
-function toCategory(categories, x) {
+function toCategory (categories, x) {
   const key = x.category || 'Other'
   if (!categories[key]) {
     categories[key] = 0
@@ -34,7 +34,7 @@ function toCategory(categories, x) {
  * @param {Object} accounts
  * @param {Object} x
  */
-function toAccount(accounts, x) {
+function toAccount (accounts, x) {
   const key = x.account
   if (!accounts[key]) {
     accounts[key] = 0
@@ -69,7 +69,7 @@ export default class HomePage extends Component {
     }
   }
 
-  componentDidMount() {
+  componentDidMount () {
     const byTimestampDesc = (x1, x2) => {
       return x2.timestamp - x1.timestamp
     }
@@ -99,7 +99,7 @@ export default class HomePage extends Component {
       })
   }
 
-  analyzeExpenses() {
+  analyzeExpenses () {
     const accountBalances = this.state.expenses
       .map(x => ({ ...x, amount: Math.round(x.amount) }))
       .reduce(toAccount, {})
@@ -156,7 +156,7 @@ export default class HomePage extends Component {
         weekly: {
           start,
           ...this.Weekly.computeForChart(start)
-        },
+        }
       })
     },
 
@@ -169,7 +169,7 @@ export default class HomePage extends Component {
         weekly: {
           start,
           ...this.Weekly.computeForChart(start)
-        },
+        }
       })
     },
 
@@ -232,7 +232,7 @@ export default class HomePage extends Component {
         monthly: {
           start,
           ...this.Monthly.computeForChart(start)
-        },
+        }
       })
     },
 
@@ -244,7 +244,7 @@ export default class HomePage extends Component {
         monthly: {
           start,
           ...this.Monthly.computeForChart(start)
-        },
+        }
       })
     },
 
@@ -284,7 +284,7 @@ export default class HomePage extends Component {
     }
   }
 
-  render() {
+  render () {
     let prevDay
     return (
       <div className="home">
@@ -305,8 +305,8 @@ export default class HomePage extends Component {
         <Card style={{ margin: '10px 0', padding: '16px' }}>
           <div className="home-timerange-heading">
             {this.state.weekly.start
-              .format('MMM D')
-              + ' - ' +
+              .format('MMM D') +
+              ' - ' +
             moment(this.state.weekly.start)
               .endOf('week')
               .format('MMM D')}
@@ -392,8 +392,8 @@ export default class HomePage extends Component {
         <Card style={{ margin: '10px 0', padding: '16px' }}>
           <div className="home-timerange-heading">
             {this.state.monthly.start
-              .format('MMM D')
-              + ' - ' +
+              .format('MMM D') +
+              ' - ' +
             moment(this.state.monthly.start)
               .endOf('month')
               .format('MMM D')}
@@ -488,7 +488,7 @@ export default class HomePage extends Component {
   }
 }
 
-function MoneySum(props) {
+function MoneySum (props) {
   return (
     <div style={{ display: 'inline-block', flexGrow: 1 }}>
       <h3 style={{ marginTop: 5, marginBottom: 0, fontWeight: 'normal' }}>
