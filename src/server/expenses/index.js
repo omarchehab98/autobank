@@ -1,6 +1,7 @@
 'use strict'
 const EventEmitter = require('events')
 const mongoose = require('mongoose')
+mongoose.Promise = global.Promise
 
 const defaultTo = require('lodash/defaultTo')
 const isObject = require('lodash/isObject')
@@ -46,9 +47,6 @@ class Expenses extends EventEmitter {
       mongoose: defaultTo(dependencies.mongoose, mongoose)
     }
 
-    Expense = Expense(this._dependencies.mongoose)
-    Income = Income(this._dependencies.mongoose)
-
     if (this._options.connectOnInit) {
       this.connect()
     }
@@ -80,9 +78,11 @@ class Expenses extends EventEmitter {
       uri = `mongodb://${host}:${port}/${database}`
     }
 
-    this._dependencies.mongoose.connect(uri)
+    this._db = this._dependencies.mongoose.createConnection(uri)
 
-    this._db = this._dependencies.mongoose.connection
+    Expense = Expense(this._dependencies.mongoose, this._db)
+    Income = Income(this._dependencies.mongoose, this._db)
+
     this._db.on('open', this._onConnect.bind(this))
     this._db.on('error', this._onError.bind(this))
   }
@@ -135,11 +135,76 @@ class Expenses extends EventEmitter {
           $gte: s,
           $lt: e
         }
+      }, [
+        '_id',
+        'account',
+        'amount',
+        'currency',
+        'timestamp',
+        'description',
+        'availableCredit',
+        'category'
+      ], {
+        sort: {
+          timestamp: -1
+        }
       }, (error, expenses) => {
         if (error) {
           reject(error)
         } else {
           resolve(expenses)
+        }
+      })
+    })
+  }
+
+  /**
+   * Removes a specific expense entry given an `id`.
+   *
+   * Returns a promise that resolves if the entry is deleted and rejects
+   * if no deletion took place.
+   * @param {string} id
+   * @return {Promise}
+   */
+  removeExpense (id) {
+    return new Promise((resolve, reject) => {
+      Expense.remove({
+        _id: id
+      }, (error) => {
+        if (error) {
+          reject(error)
+        } else {
+          resolve()
+        }
+      })
+    })
+  }
+
+  /**
+   * Edits a specific expense entry given an `id`.
+   *
+   * Returns a promise that resolves if the entry is editted and rejects
+   * if no edit took place.
+   * @param {string} id
+   * @param {Object} changes
+   * @param {string} changes.description
+   * @param {number} changes.timestamp
+   * @param {string} changes.category
+   * @return {Promise}
+   */
+  editExpense (id, changes) {
+    return new Promise((resolve, reject) => {
+      Expense.update({
+        _id: id
+      }, {
+        description: changes.description,
+        timestamp: changes.timestamp,
+        category: changes.category
+      }, (error) => {
+        if (error) {
+          reject(error)
+        } else {
+          resolve()
         }
       })
     })
@@ -170,11 +235,76 @@ class Expenses extends EventEmitter {
           $gte: s,
           $lt: e
         }
+      }, [
+        '_id',
+        'account',
+        'amount',
+        'currency',
+        'timestamp',
+        'description',
+        'availableCredit',
+        'category'
+      ], {
+        sort: {
+          timestamp: -1
+        }
       }, (error, expenses) => {
         if (error) {
           reject(error)
         } else {
           resolve(expenses)
+        }
+      })
+    })
+  }
+
+  /**
+   * Removes a specific income entry given an `id`.
+   *
+   * Returns a promise that resolves if the entry is deleted and rejects
+   * if no deletion took place.
+   * @param {string} id
+   * @return {Promise}
+   */
+  removeIncome (id) {
+    return new Promise((resolve, reject) => {
+      Income.remove({
+        _id: id
+      }, (error) => {
+        if (error) {
+          reject(error)
+        } else {
+          resolve()
+        }
+      })
+    })
+  }
+
+  /**
+   * Edits a specific income entry given an `id`.
+   *
+   * Returns a promise that resolves if the entry is editted and rejects
+   * if no edit took place.
+   * @param {string} id
+   * @param {Object} changes
+   * @param {string} changes.description
+   * @param {number} changes.timestamp
+   * @param {string} changes.category
+   * @return {Promise}
+   */
+  editIncome (id, changes) {
+    return new Promise((resolve, reject) => {
+      Income.update({
+        _id: id
+      }, {
+        description: changes.description,
+        timestamp: changes.timestamp,
+        category: changes.category
+      }, (error) => {
+        if (error) {
+          reject(error)
+        } else {
+          resolve()
         }
       })
     })

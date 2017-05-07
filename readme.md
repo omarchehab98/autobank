@@ -2,8 +2,6 @@
 
 [![Build Status][build-badge]][build-status] [![XO code style][xo-badge]][xo] [![License][license-badge]][license]
 
-`eun` is my day-to-day helper. He can be yours too, just fork him!
-
 Currently, `eun`:
 
 * **automatically** logs **expenses** by **monitoring** mail

@@ -1,8 +1,8 @@
 {
   "name": "eun",
   "version": "0.0.2",
-  "description": "My personal butler!",
-  "main": "src/main.js",
+  "description": "Automated expense tracker",
+  "main": "src/server/index.js",
   "scripts": {
     "lint": "eslint .",
     "lint-auto": "eslint --fix .",
@@ -23,18 +23,23 @@
   },
   "homepage": "https://github.com/omarchehab98/eun#readme",
   "dependencies": {
+    "body-parser": "^1.17.1",
+    "chart.js": "2.3",
     "express": "^4.15.2",
     "he": "^1.1.1",
     "imap": "^0.8.19",
     "lodash": "^4.17.4",
     "mailparser": "^2.0.4",
+    "material-ui": "^0.17.4",
     "moment": "^2.18.1",
     "moment-timezone": "^0.5.13",
     "mongoose": "^4.9.6",
     "prop-types": "^15.5.8",
     "react": "^15.5.4",
+    "react-chartjs-2": "^2.0.5",
     "react-dom": "^15.5.4",
     "react-router-dom": "^4.1.1",
+    "react-tap-event-plugin": "^2.0.1",
     "striptags": "^3.0.1"
   },
   "devDependencies": {

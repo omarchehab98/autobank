@@ -15,7 +15,11 @@ module.exports = env => {
         'react',
         'react-dom',
         'react-router-dom',
-        'prop-types'
+        'prop-types',
+        'material-ui',
+        'react-tap-event-plugin',
+        'react-chartjs-2',
+        'chart.js'
       ]
     },
     output: {
@@ -45,6 +49,7 @@ module.exports = env => {
     devtool: !isProd && 'eval',
     devServer: {
       contentBase: dist,
+      host: '0.0.0.0',
       port: process.env.PORT || 3000,
       historyApiFallback: true,
       compress: isProd,
