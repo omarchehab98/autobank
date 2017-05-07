@@ -19,6 +19,7 @@ class Mailbox extends EventEmitter {
    * @param {string} credentials.password
    * @param {number} [credentials.port]
    * @param {boolean} [credentials.tls]
+   * @param {boolean} [credentials.tlsOptions]
    * @param {Object} [options]
    * @param {string} [options.mailbox]
    * @param {string[]} [options.search]
@@ -37,7 +38,16 @@ class Mailbox extends EventEmitter {
       user: credentials.user,
       password: credentials.password,
       port: defaultTo(credentials.port, 993),
-      tls: defaultTo(credentials.tls, true)
+      tls: defaultTo(credentials.tls, true),
+      tlsOptions: defaultTo(credentials.tlsOptions, null)
+    }
+
+    if (this._credentials.tlsOptions !== null) {
+      const tlsOptions = this._credentials.tlsOptions
+      this._credentials.tlsOptions = Object.assign(tlsOptions, {
+        cert: tlsOptions.cert && fs.readFileSync(tlsOptions.cert),
+        key: tlsOptions.key && fs.readFileSync(tlsOptions.key)
+      })
     }
 
     options = defaultTo(options, {})
