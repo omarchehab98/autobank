@@ -1,6 +1,6 @@
 {
   "name": "eun",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "description": "Automated expense tracker",
   "main": "src/server/index.js",
   "scripts": {
