@@ -1,6 +1,7 @@
 'use strict'
 const EventEmitter = require('events')
 const IMAP = require('imap')
+const fs = require('fs')
 const simpleParser = require('mailparser').simpleParser
 const striptags = require('striptags')
 const HTMLEntities = require('he')
