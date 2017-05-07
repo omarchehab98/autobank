@@ -43,6 +43,7 @@ module.exports = isProd => {
         filename: 'service-worker.js',
         dontCacheBustUrlsMatching: /./,
         navigateFallback: 'index.html',
+        navigateFallbackWhitelist: [/^(?!\/api)/i],
         staticFileGlobsIgnorePatterns: [/\.map$/]
       })
     )
