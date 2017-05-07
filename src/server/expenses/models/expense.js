@@ -1,6 +1,6 @@
 'use strict'
 
-function Expense (mongoose) {
+function Expense (mongoose, db) {
   const expenseSchema = new mongoose.Schema({
     account: String,
     amount: Number,
@@ -10,7 +10,7 @@ function Expense (mongoose) {
     availableCredit: Number,
     category: {type: String, default: 'Other'}
   })
-  return mongoose.model('Expense', expenseSchema)
+  return db.model('Expense', expenseSchema)
 }
 
 module.exports = Expense

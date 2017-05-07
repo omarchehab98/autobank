@@ -1,3 +1,4 @@
+import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.scss'
 
@@ -9,7 +10,7 @@ injectTapEventPlugin()
 function render () {
   const Application = require('./views').default
   ReactDOM.render(
-    Application,
+    <Application/>,
     document.getElementById('root')
   )
 }

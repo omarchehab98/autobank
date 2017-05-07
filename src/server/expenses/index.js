@@ -1,6 +1,7 @@
 'use strict'
 const EventEmitter = require('events')
 const mongoose = require('mongoose')
+mongoose.Promise = global.Promise
 
 const defaultTo = require('lodash/defaultTo')
 const isObject = require('lodash/isObject')
@@ -46,9 +47,6 @@ class Expenses extends EventEmitter {
       mongoose: defaultTo(dependencies.mongoose, mongoose)
     }
 
-    Expense = Expense(this._dependencies.mongoose)
-    Income = Income(this._dependencies.mongoose)
-
     if (this._options.connectOnInit) {
       this.connect()
     }
@@ -80,9 +78,11 @@ class Expenses extends EventEmitter {
       uri = `mongodb://${host}:${port}/${database}`
     }
 
-    this._dependencies.mongoose.connect(uri)
+    this._db = this._dependencies.mongoose.createConnection(uri)
 
-    this._db = this._dependencies.mongoose.connection
+    Expense = Expense(this._dependencies.mongoose, this._db)
+    Income = Income(this._dependencies.mongoose, this._db)
+
     this._db.on('open', this._onConnect.bind(this))
     this._db.on('error', this._onError.bind(this))
   }

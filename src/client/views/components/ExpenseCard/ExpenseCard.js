@@ -1,7 +1,11 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import moment from 'moment'
+
 import server from 'views/helpers/network.js'
+import {colorMoney} from 'views/helpers/colors.js'
+
+import moment from 'moment'
+
 import {
   Card, CardHeader, CardText, CardActions
 } from 'material-ui/Card'
@@ -13,10 +17,24 @@ import CircularProgress from 'material-ui/CircularProgress'
 import TextField from 'material-ui/TextField'
 import DatePicker from 'material-ui/DatePicker'
 import TimePicker from 'material-ui/TimePicker'
-import {colorMoney} from 'views/helpers/colors.js'
 import AutoComplete from 'material-ui/AutoComplete'
 
-class CardExpense extends Component {
+class ExpenseCard extends Component {
+  static propTypes = {
+    type: PropTypes.string,
+    id: PropTypes.string,
+    amount: PropTypes.number,
+    currency: PropTypes.string,
+    timestamp: PropTypes.number,
+    account: PropTypes.string,
+    availableCredit: PropTypes.number,
+    description: PropTypes.string,
+    category: PropTypes.string,
+    onEdit: PropTypes.func,
+    onDelete: PropTypes.func,
+    categories: PropTypes.array
+  }
+
   state = {
     loading: 0,
     EditDialog: {
@@ -303,19 +321,4 @@ class CardExpense extends Component {
   }
 }
 
-CardExpense.propTypes = {
-  type: PropTypes.string,
-  id: PropTypes.string,
-  amount: PropTypes.number,
-  currency: PropTypes.string,
-  timestamp: PropTypes.number,
-  account: PropTypes.string,
-  availableCredit: PropTypes.number,
-  description: PropTypes.string,
-  category: PropTypes.string,
-  onEdit: PropTypes.func,
-  onDelete: PropTypes.func,
-  categories: PropTypes.array
-}
-
-export default CardExpense
+export default ExpenseCard

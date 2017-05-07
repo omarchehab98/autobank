@@ -1,17 +1,19 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import CardExpense from 'views/components/card-expense.js'
+
 import server from 'views/helpers/network.js'
-import './home.scss'
-import Card from 'material-ui/Card'
-import Chip from 'material-ui/Chip'
+import ExpenseCard from 'views/components/ExpenseCard'
+import { colorMoney, hashHSL } from 'views/helpers/colors.js'
+
 import {
   Bar as BarChart,
   Doughnut as DoughnutChart
 } from 'react-chartjs-2'
 import moment from 'moment'
-import { colorMoney, hashHSL } from 'views/helpers/colors.js'
 import { map } from 'lodash'
+
+import Card from 'material-ui/Card'
+import Chip from 'material-ui/Chip'
 import IconButton from 'material-ui/IconButton'
 import FontIcon from 'material-ui/FontIcon'
 
@@ -43,7 +45,7 @@ function toAccount (accounts, x) {
   return accounts
 }
 
-export default class HomePage extends Component {
+class ExpensesPage extends Component {
   state = {
     // overall
     expenses: [],
@@ -474,7 +476,7 @@ export default class HomePage extends Component {
           prevDay = currDay
           return [
             divider,
-            <CardExpense
+            <ExpenseCard
               key={expense.id}
               {...expense}
               categories={Object.keys(this.state.expenses.reduce(toCategory, {}))}
@@ -510,3 +512,5 @@ MoneySum.propTypes = {
   value: PropTypes.number,
   currency: PropTypes.string
 }
+
+export default ExpensesPage
