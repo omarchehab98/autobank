@@ -19,6 +19,7 @@ const incomeModel = require('./models/income.js')
 function API (credentials, dependencies) {
   const privateKey = credentials.privateKey
   const path = credentials.path || ''
+  const host = credentials.host || 'localhost'
   const port = credentials.port || '80'
 
   app.use(bodyParser.urlencoded({ extended: true }))
@@ -66,7 +67,7 @@ function API (credentials, dependencies) {
     income.editController(dependencies.expenses, incomeModel)
   ])
 
-  app.listen(port)
+  app.listen(port, host)
 }
 
 module.exports = API
