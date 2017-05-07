@@ -15,6 +15,7 @@ class Authentication extends EventEmitter {
    * @param  {string} credentials.database
    * @param  {string} [credentials.username]
    * @param  {string} [credentials.password]
+   * @param  {string} [credentials.authSource]
    * @param  {number} [credentials.port]
    * @param  {Object} [options]
    * @param  {boolean} [options.connectOnInit]
@@ -31,6 +32,7 @@ class Authentication extends EventEmitter {
       database: credentials.database,
       username: defaultTo(credentials.username, null),
       password: defaultTo(credentials.password, null),
+      authSource: defaultTo(credentials.authSource, null),
       port: defaultTo(credentials.port, 27017)
     }
 
@@ -69,10 +71,12 @@ class Authentication extends EventEmitter {
 
     const hasUsername = this._credentials.username !== null
     const hasPassword = this._credentials.password !== null
-    if (hasUsername && hasPassword) {
+    const hasAuthSource = this._credentials.authSource !== null
+    if (hasUsername && hasPassword && hasAuthSource) {
       const username = this._credentials.username
       const password = this._credentials.password
-      uri = `mongodb://${username}:${password}@${host}:${port}/${database}`
+      const authSource = this._credentials.authSource
+      uri = `mongodb://${username}:${password}@${host}:${port}/${database}?authSource=${authSource}`
     } else {
       uri = `mongodb://${host}:${port}/${database}`
     }
