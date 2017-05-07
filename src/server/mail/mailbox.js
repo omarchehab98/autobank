@@ -47,7 +47,8 @@ class Mailbox extends EventEmitter {
       const tlsOptions = this._credentials.tlsOptions
       this._credentials.tlsOptions = Object.assign(tlsOptions, {
         cert: tlsOptions.cert && fs.readFileSync(tlsOptions.cert),
-        key: tlsOptions.key && fs.readFileSync(tlsOptions.key)
+        key: tlsOptions.key && fs.readFileSync(tlsOptions.key),
+        ca: tlsOptions.ca && fs.readFileSync(tlsOptions.ca)
       })
     }
 
