@@ -44,7 +44,11 @@ module.exports = isProd => {
         dontCacheBustUrlsMatching: /./,
         navigateFallback: 'index.html',
         navigateFallbackWhitelist: [/^(?!\/api)/i],
-        staticFileGlobsIgnorePatterns: [/\.map$/]
+        staticFileGlobsIgnorePatterns: [/\.map$/],
+        runtimeCaching: [{
+          urlPattern: /\/api\//i,
+          handler: 'networkFirst'
+        }]
       })
     )
   } else {
