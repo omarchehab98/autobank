@@ -287,204 +287,216 @@ class ExpensesPage extends Component {
   }
 
   render () {
+    const isEmpty = Object.keys(this.state.accountBalances).length
     let prevDay
     return (
       <div className="home">
-        {/* Total */}
-        <Card style={{ margin: '10px 0', padding: '16px' }}>
-          <div style={{ display: 'flex', textAlign: 'center' }}>
-            {map(this.state.accountBalances, (balance, account) =>
-              <MoneySum
-                key={account}
-                title="Balance"
-                subtitle={'(' + account.substring(account.length - 4, account.length) + ')'}
-                value={balance}
-                currency="CAD"
-              />)}
-          </div>
-        </Card>
-        {/* Weekly */}
-        <Card style={{ margin: '10px 0', padding: '16px' }}>
-          <div className="home-timerange-heading">
-            {this.state.weekly.start
-              .format('MMM D') +
-              ' - ' +
-            moment(this.state.weekly.start)
-              .endOf('week')
-              .format('MMM D')}
-          </div>
-          <div style={{ display: 'flex', textAlign: 'center' }}>
-            {/* Previous Week */}
-            <div>
-              <IconButton
-                tooltip="Previous week"
-                tooltipPosition="bottom-center"
-                onTouchTap={this.Weekly.handlePrev}>
-                <FontIcon className="material-icons"
-                  color="#444">
-                  chevron_left
-                </FontIcon>
-              </IconButton>
-              <div className="home-timerange-sm">
-                {moment(this.state.weekly.start)
-                  .add(-7, 'd')
+        {!isEmpty && (
+          <Card style={{ margin: '10px 0', padding: '16px' }}>
+            <div style={{ fontSize: 20, fontWeight: 'normal' }}>Hello Omar!</div>
+            <p>You do not have any expenses logged into the database yet.</p>
+          </Card>
+        )}
+        {isEmpty && (
+          <div>
+            {/* Total */}
+            <Card style={{ margin: '10px 0', padding: '16px' }}>
+              <div style={{ display: 'flex', textAlign: 'center' }}>
+                {map(this.state.accountBalances, (balance, account) =>
+                  <MoneySum
+                    key={account}
+                    title="Balance"
+                    subtitle={'(' + account.substring(account.length - 4, account.length) + ')'}
+                    value={balance}
+                    currency="CAD"
+                  />)}
+              </div>
+            </Card>
+            {/* Weekly */}
+            <Card style={{ margin: '10px 0', padding: '16px' }}>
+              <div className="home-timerange-heading">
+                {this.state.weekly.start
+                  .format('MMM D') +
+                  ' - ' +
+                moment(this.state.weekly.start)
+                  .endOf('week')
                   .format('MMM D')}
               </div>
-            </div>
-            <MoneySum
-              title="Income"
-              subtitle="(week)"
-              value={this.state.weekly.totalIncome}
-              currency="CAD"
-            />
-            <MoneySum
-              title="Expenses"
-              subtitle="(week)"
-              value={this.state.weekly.totalExpenses}
-              currency="CAD"
-            />
-            <div>
-              {/* Next Week */}
-              <IconButton
-                tooltip="Next week"
-                tooltipPosition="bottom-center"
-                onTouchTap={this.Weekly.handleNext}>
-                <FontIcon className="material-icons"
-                  color="#444">
-                  chevron_right
-                </FontIcon>
-              </IconButton>
-              <div className="home-timerange-sm">
-                {moment(this.state.weekly.start)
-                  .add(7, 'd')
-                  .format('MMM D')}
+              <div style={{ display: 'flex', textAlign: 'center' }}>
+                {/* Previous Week */}
+                <div>
+                  <IconButton
+                    tooltip="Previous week"
+                    tooltipPosition="bottom-center"
+                    onTouchTap={this.Weekly.handlePrev}>
+                    <FontIcon className="material-icons"
+                      color="#444">
+                      chevron_left
+                    </FontIcon>
+                  </IconButton>
+                  <div className="home-timerange-sm">
+                    {moment(this.state.weekly.start)
+                      .add(-7, 'd')
+                      .format('MMM D')}
+                  </div>
+                </div>
+                <MoneySum
+                  title="Income"
+                  subtitle="(week)"
+                  value={this.state.weekly.totalIncome}
+                  currency="CAD"
+                />
+                <MoneySum
+                  title="Expenses"
+                  subtitle="(week)"
+                  value={this.state.weekly.totalExpenses}
+                  currency="CAD"
+                />
+                <div>
+                  {/* Next Week */}
+                  <IconButton
+                    tooltip="Next week"
+                    tooltipPosition="bottom-center"
+                    onTouchTap={this.Weekly.handleNext}>
+                    <FontIcon className="material-icons"
+                      color="#444">
+                      chevron_right
+                    </FontIcon>
+                  </IconButton>
+                  <div className="home-timerange-sm">
+                    {moment(this.state.weekly.start)
+                      .add(7, 'd')
+                      .format('MMM D')}
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-          {(this.state.weekly.totalIncome - this.state.weekly.totalExpenses > 0) &&
-            <BarChart
-              data={{
-                labels: this.state.weekly.labels,
-                datasets: [
-                  {
-                    backgroundColor: colorMoney(1),
-                    label: 'Income',
-                    data: this.state.weekly.income
-                  },
-                  {
-                    backgroundColor: colorMoney(-1),
-                    label: 'Expense',
-                    data: this.state.weekly.expenses.map(Math.abs)
-                  }
-                ]
-              }}
-              options={{
-                scales: {
-                  xAxes: [{
-                    stacked: true
-                  }],
-                  yAxes: [{
-                    stacked: true
-                  }]
-                }
-              }}
-            />}
-        </Card>
-        {/* Monthly */}
-        <Card style={{ margin: '10px 0', padding: '16px' }}>
-          <div className="home-timerange-heading">
-            {this.state.monthly.start
-              .format('MMM D') +
-              ' - ' +
-            moment(this.state.monthly.start)
-              .endOf('month')
-              .format('MMM D')}
-          </div>
-          <div style={{ display: 'flex', textAlign: 'center' }}>
-            <div>
-              {/* Previous Month */}
-              <IconButton
-                tooltip="Previous month"
-                tooltipPosition="bottom-center"
-                onTouchTap={this.Monthly.handlePrev}>
-                <FontIcon className="material-icons"
-                  color="#444">
-                  chevron_left
-                </FontIcon>
-              </IconButton>
-              <div className="home-timerange-sm">
-                {moment(this.state.monthly.start)
-                  .add(-1, 'd')
-                  .startOf('month')
-                  .format('MMM D')}
-              </div>
-            </div>
-            <MoneySum
-              title="Income"
-              subtitle="(month)"
-              value={this.state.monthly.totalIncome}
-              currency="CAD"
-            />
-            <MoneySum
-              title="Expenses"
-              subtitle="(month)"
-              value={this.state.monthly.totalExpenses}
-              currency="CAD"
-            />
-            <div>
-              {/* Next Month */}
-              <IconButton
-                tooltip="Next month"
-                tooltipPosition="bottom-center"
-                onTouchTap={this.Monthly.handleNext}>
-                <FontIcon className="material-icons"
-                  color="#444">
-                  chevron_right
-                </FontIcon>
-              </IconButton>
-              <div className="home-timerange-sm">
-                {moment(this.state.monthly.start)
+              {(this.state.weekly.totalIncome - this.state.weekly.totalExpenses > 0) &&
+                <BarChart
+                  data={{
+                    labels: this.state.weekly.labels,
+                    datasets: [
+                      {
+                        backgroundColor: colorMoney(1),
+                        label: 'Income',
+                        data: this.state.weekly.income
+                      },
+                      {
+                        backgroundColor: colorMoney(-1),
+                        label: 'Expense',
+                        data: this.state.weekly.expenses.map(Math.abs)
+                      }
+                    ]
+                  }}
+                  options={{
+                    scales: {
+                      xAxes: [{
+                        stacked: true
+                      }],
+                      yAxes: [{
+                        stacked: true
+                      }]
+                    }
+                  }}
+                />}
+            </Card>
+            {/* Monthly */}
+            <Card style={{ margin: '10px 0', padding: '16px' }}>
+              <div className="home-timerange-heading">
+                {this.state.monthly.start
+                  .format('MMM D') +
+                  ' - ' +
+                moment(this.state.monthly.start)
                   .endOf('month')
-                  .add(1, 'd')
                   .format('MMM D')}
               </div>
+              <div style={{ display: 'flex', textAlign: 'center' }}>
+                <div>
+                  {/* Previous Month */}
+                  <IconButton
+                    tooltip="Previous month"
+                    tooltipPosition="bottom-center"
+                    onTouchTap={this.Monthly.handlePrev}>
+                    <FontIcon className="material-icons"
+                      color="#444">
+                      chevron_left
+                    </FontIcon>
+                  </IconButton>
+                  <div className="home-timerange-sm">
+                    {moment(this.state.monthly.start)
+                      .add(-1, 'd')
+                      .startOf('month')
+                      .format('MMM D')}
+                  </div>
+                </div>
+                <MoneySum
+                  title="Income"
+                  subtitle="(month)"
+                  value={this.state.monthly.totalIncome}
+                  currency="CAD"
+                />
+                <MoneySum
+                  title="Expenses"
+                  subtitle="(month)"
+                  value={this.state.monthly.totalExpenses}
+                  currency="CAD"
+                />
+                <div>
+                  {/* Next Month */}
+                  <IconButton
+                    tooltip="Next month"
+                    tooltipPosition="bottom-center"
+                    onTouchTap={this.Monthly.handleNext}>
+                    <FontIcon className="material-icons"
+                      color="#444">
+                      chevron_right
+                    </FontIcon>
+                  </IconButton>
+                  <div className="home-timerange-sm">
+                    {moment(this.state.monthly.start)
+                      .endOf('month')
+                      .add(1, 'd')
+                      .format('MMM D')}
+                  </div>
+                </div>
+              </div>
+              {(this.state.monthly.totalIncome - this.state.monthly.totalExpenses > 0) &&
+                <DoughnutChart
+                  data={{
+                    labels: Object.keys(this.state.monthly.expenses),
+                    datasets: [{
+                      data: Object.values(this.state.monthly.expenses),
+                      backgroundColor: Object.keys(this.state.monthly.expenses).map(s => hashHSL(s, '75%', '40%'))
+                    }]
+                  }}
+                />}
+            </Card>
+            <div>
+              {this.state.expenses.map(expense => {
+                const currDate = moment(expense.timestamp * 1000)
+                const currDay = currDate.day()
+                let divider
+                if (!prevDay || prevDay !== currDay) {
+                  divider = (
+                    <Chip style={{ margin: '0 auto' }}>
+                      {currDate.format('Y-M-D')}
+                    </Chip>
+                  )
+                }
+                prevDay = currDay
+                return [
+                  divider,
+                  <ExpenseCard
+                    key={expense.id}
+                    {...expense}
+                    categories={Object.keys(this.state.expenses.reduce(toCategory, {}))}
+                    onEdit={this.handleEditExpense}
+                    onDelete={this.handleDeleteExpense}
+                  />
+                ]
+              })}
             </div>
           </div>
-          {(this.state.monthly.totalIncome - this.state.monthly.totalExpenses > 0) &&
-            <DoughnutChart
-              data={{
-                labels: Object.keys(this.state.monthly.expenses),
-                datasets: [{
-                  data: Object.values(this.state.monthly.expenses),
-                  backgroundColor: Object.keys(this.state.monthly.expenses).map(s => hashHSL(s, '75%', '40%'))
-                }]
-              }}
-            />}
-        </Card>
-
-        {this.state.expenses.map(expense => {
-          const currDate = moment(expense.timestamp * 1000)
-          const currDay = currDate.day()
-          let divider
-          if (!prevDay || prevDay !== currDay) {
-            divider = (
-              <Chip style={{ margin: '0 auto' }}>
-                {currDate.format('Y-M-D')}
-              </Chip>
-            )
-          }
-          prevDay = currDay
-          return [
-            divider,
-            <ExpenseCard
-              key={expense.id}
-              {...expense}
-              categories={Object.keys(this.state.expenses.reduce(toCategory, {}))}
-              onEdit={this.handleEditExpense}
-              onDelete={this.handleDeleteExpense}
-            />
-          ]
-        })}
+        )}
       </div>
     )
   }
