@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.scss'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import Snackbar from 'material-ui/Snackbar';
+import Snackbar from 'material-ui/Snackbar'
 
 import injectTapEventPlugin from 'react-tap-event-plugin'
 // Needed for onTouchTap
@@ -25,43 +25,43 @@ if (process.env.NODE_ENV === 'production') {
     navigator.serviceWorker.register('/service-worker.js')
       .then(reg => {
         reg.onupdatefound = () => {
-          const installingWorker = reg.installing;
+          const installingWorker = reg.installing
           installingWorker.onstatechange = () => {
             switch (installingWorker.state) {
               case 'installed':
                 if (navigator.serviceWorker.controller) {
                   showSnackbar(
                     5000,
-                    "New content available!",
-                    "reload",
+                    'New content available!',
+                    'reload',
                     () => window.location.reload()
                   )
                 } else {
                   showSnackbar(
                     3000,
-                    "Application is now available offline!"
+                    'Application is now available offline!'
                   )
                 }
-                break;
+                break
 
               case 'redundant':
-                console.error('Service Worker', 'Installing Service Worker became redundant.');
-                break;
+                console.error('Service Worker', 'Installing Service Worker became redundant.')
+                break
             }
-          };
-        };
+          }
+        }
       })
       .catch(error => {
-        console.error('Service Worker', error);
-      });
+        console.error('Service Worker', error)
+      })
   }
 } else {
   module.hot.accept('./views', render)
   require('eruda').init()
 }
 
-function showSnackbar(duration, message, action, onAction) {
-  function snackbar (isOpen, message='', action, onAction) {
+function showSnackbar (duration, message, action, onAction) {
+  function snackbar (isOpen, message = '', action, onAction) {
     ReactDOM.render(
       <MuiThemeProvider>
         <Snackbar
