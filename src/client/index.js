@@ -1,15 +1,15 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.scss'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import Snackbar from 'material-ui/Snackbar';
-import RaisedButton from 'material-ui/RaisedButton';
 
 import injectTapEventPlugin from 'react-tap-event-plugin'
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin()
 
-function render () {
+function render (reload) {
   const Application = require('./views').default
   ReactDOM.render(
     <Application />,
@@ -18,6 +18,7 @@ function render () {
 }
 
 render()
+showSnackbar(false)
 
 if (process.env.NODE_ENV === 'production') {
   if ('serviceWorker' in navigator && window.location.protocol === 'https:') {
@@ -29,9 +30,17 @@ if (process.env.NODE_ENV === 'production') {
             switch (installingWorker.state) {
               case 'installed':
                 if (navigator.serviceWorker.controller) {
-                  console.log('New or updated content is available.');
+                  showSnackbar(
+                    5000,
+                    "New content available!",
+                    "reload",
+                    () => window.location.reload()
+                  )
                 } else {
-                  console.log('Content is now available offline!');
+                  showSnackbar(
+                    3000,
+                    "Application is now available offline!"
+                  )
                 }
                 break;
 
@@ -49,4 +58,27 @@ if (process.env.NODE_ENV === 'production') {
 } else {
   module.hot.accept('./views', render)
   require('eruda').init()
+}
+
+function showSnackbar(duration, message, action, onAction) {
+  function snackbar (isOpen, message='', action, onAction) {
+    ReactDOM.render(
+      <MuiThemeProvider>
+        <Snackbar
+          open={isOpen}
+          message={message}
+          action={action}
+          onActionTouchTap={onAction}
+          onRequestClose={() => {
+            snackbar(false)
+            clearTimeout(automaticClose)
+          }} />
+      </MuiThemeProvider>,
+      document.getElementById('snackbar')
+    )
+  }
+  if (duration) {
+    snackbar(true, message, action, onAction)
+  }
+  const automaticClose = setTimeout(() => snackbar(false), duration)
 }
