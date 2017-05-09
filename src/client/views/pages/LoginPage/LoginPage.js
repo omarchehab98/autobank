@@ -20,6 +20,7 @@ class LoginPage extends Component {
     redirectToReferrer: false,
     privateKey: '',
     error: false,
+    skipRender: server.token !== null,
     loading: 0
   }
 
@@ -37,6 +38,7 @@ class LoginPage extends Component {
             }))
           } else {
             this.setState(prev => ({
+              skipRender: false,
               loading: prev.loading - 1
             }))
           }
@@ -85,6 +87,7 @@ class LoginPage extends Component {
   render () {
     const {
       redirectToReferrer,
+      skipRender,
       privateKey,
       error,
       loading
@@ -97,6 +100,10 @@ class LoginPage extends Component {
       return (
         <Redirect to={from}/>
       )
+    }
+
+    if (skipRender) {
+      return <div/>
     }
 
     return (
