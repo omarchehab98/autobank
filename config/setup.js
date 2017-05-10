@@ -1,4 +1,4 @@
-const { join } = require('path')
+const { join, resolve } = require('path')
 const webpack = require('webpack')
 const ExtractText = require('extract-text-webpack-plugin')
 const SWPrecache = require('sw-precache-webpack-plugin')
@@ -40,8 +40,14 @@ module.exports = isProd => {
       new webpack.optimize.UglifyJsPlugin(uglify),
       new ExtractText('styles.[hash].css'),
       new SWPrecache({
+        cacheId: 'eun',
         filename: 'service-worker.js',
-        dontCacheBustUrlsMatching: /./,
+        maximumFileSizeToCacheInBytes: 8388608,
+        staticFileGlobs: [
+          resolve(__dirname, '../src/client/static') + '/**/*.{js,html,css,png,jpg,gif,svg,eot,ttf,woff,woff2}'
+        ],
+        stripPrefix: resolve(__dirname, '../src/client/static'),
+        directoryIndex: '/',
         navigateFallback: 'index.html',
         navigateFallbackWhitelist: [/^(?!\/api)/i],
         staticFileGlobsIgnorePatterns: [/\.map$/],
