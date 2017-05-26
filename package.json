@@ -7,8 +7,8 @@
     "lint": "eslint .",
     "lint-auto": "eslint --fix .",
     "test": "mocha",
-    "start": "NODE_ENV=production node src/server/index.js | tee -a logs/transactions.log",
-    "build-client": "webpack --env.production --config config/webpack",
+    "start": "node src/server/index.js",
+    "build": "webpack --env.production --config config/webpack",
     "watch-client": "webpack-dashboard -- webpack-dev-server --config config/webpack",
     "watch-server": "nodemon --watch src/server src/server/index.js"
   },
@@ -34,12 +34,12 @@
     "moment": "^2.18.1",
     "moment-timezone": "^0.5.13",
     "mongoose": "^4.9.6",
+    "preact": "^8.1.0",
+    "preact-compat": "^3.16.0",
+    "preact-tap-event-plugin": "^0.1.2",
     "prop-types": "^15.5.8",
-    "react": "^15.5.4",
     "react-chartjs-2": "^2.0.5",
-    "react-dom": "^15.5.4",
     "react-router-dom": "^4.1.1",
-    "react-tap-event-plugin": "^2.0.1",
     "striptags": "^3.0.1"
   },
   "devDependencies": {

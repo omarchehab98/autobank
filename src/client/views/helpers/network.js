@@ -1,6 +1,6 @@
 const esc = window.encodeURIComponent
 
-const url = 'http://localhost:3001/v1'
+const url = 'http://localhost:8080/v1'
 const endpoints = {
   generateToken: () => `${url}/authentication/generateToken`,
   validateToken: () => `${url}/authentication/validateToken`,

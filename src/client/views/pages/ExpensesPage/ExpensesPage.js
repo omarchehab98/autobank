@@ -10,7 +10,7 @@ import {
   Doughnut as DoughnutChart
 } from 'react-chartjs-2'
 import moment from 'moment'
-import { map } from 'lodash'
+import map from 'lodash/map'
 
 import Card from 'material-ui/Card'
 import Chip from 'material-ui/Chip'
