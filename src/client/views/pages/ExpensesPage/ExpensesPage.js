@@ -48,7 +48,7 @@ function toAccount (accounts, x) {
 class ExpensesPage extends Component {
   state = {
     // overall
-    expenses: undefined,
+    expenses: [],
     accountBalances: undefined,
     // weekly data
     weekly: {
