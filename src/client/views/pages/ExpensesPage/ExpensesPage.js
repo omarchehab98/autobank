@@ -48,8 +48,8 @@ function toAccount (accounts, x) {
 class ExpensesPage extends Component {
   state = {
     // overall
-    expenses: [],
-    accountBalances: {},
+    expenses: undefined,
+    accountBalances: undefined,
     // weekly data
     weekly: {
       start: moment().startOf('week'),
@@ -287,6 +287,9 @@ class ExpensesPage extends Component {
   }
 
   render () {
+    if (this.state.accountBalances === undefined) {
+      return null
+    }
     const isEmpty = Object.keys(this.state.accountBalances).length
     let prevDay
     return (
