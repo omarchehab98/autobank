@@ -16,7 +16,7 @@ Available on [npm][]
 git clone https://github.com/omarchehab98/eun
 npm install
 npm test
-npm run build-client
+npm run build
 npm start
 ```
 

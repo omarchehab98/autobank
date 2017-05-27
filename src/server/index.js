@@ -28,12 +28,3 @@ API(credentials.api, {
   authentication
 })
 console.log('API: localhost:' + credentials.api.port)
-
-if (process.env.NODE_ENV === 'production') {
-  const express = require('express')
-  const webserver = express()
-  const port = 3000
-  webserver.use(express.static('dist'))
-  webserver.listen(port)
-  console.log('Webserver: localhost:' + port)
-}
