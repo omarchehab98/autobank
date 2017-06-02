@@ -45,6 +45,15 @@ function toAccount (accounts, x) {
   return accounts
 }
 
+/**
+ * Helper function used like `sort(byTimestampDesc)` on `expenses`
+ * @param {Object} x1
+ * @param {Object} x2
+ */
+function byTimestampDesc (x1, x2) {
+  return x2.timestamp - x1.timestamp
+}
+
 class ExpensesPage extends Component {
   state = {
     // overall
@@ -72,10 +81,16 @@ class ExpensesPage extends Component {
   }
 
   componentDidMount () {
-    const byTimestampDesc = (x1, x2) => {
-      return x2.timestamp - x1.timestamp
-    }
-    server.getExpenses(0, Date.now())
+    const lastFetch = window.localStorage.getItem('lastFetch') || 0
+    const now = Date.now()
+
+    this.setState(() => ({
+      expenses: JSON.parse(window.localStorage.getItem('expenses') || '[]')
+        .concat(JSON.parse(window.localStorage.getItem('income') || '[]'))
+        .sort(byTimestampDesc)
+    }), this.analyzeExpenses)
+
+    server.getExpenses(lastFetch, now)
       .then(expenses => {
         const newExpenses = this.state.expenses
           .concat(expenses.map(expense => ({
@@ -85,9 +100,17 @@ class ExpensesPage extends Component {
           .sort(byTimestampDesc)
         this.setState({
           expenses: newExpenses
-        }, this.analyzeExpenses)
+        }, () => {
+          window.localStorage.setItem('lastFetch', now)
+          const {expenses} = this.state
+          window.localStorage.setItem('expenses', JSON.stringify(
+            expenses.filter(({type}) => type === 'expense')
+          ))
+          this.analyzeExpenses()
+        })
       })
-    server.getIncome(0, Date.now())
+
+    server.getIncome(lastFetch, now)
       .then(income => {
         const newExpenses = this.state.expenses
           .concat(income.map(income => ({
@@ -97,7 +120,14 @@ class ExpensesPage extends Component {
           .sort(byTimestampDesc)
         this.setState({
           expenses: newExpenses
-        }, this.analyzeExpenses)
+        }, () => {
+          window.localStorage.setItem('lastFetch', now)
+          const {expenses} = this.state
+          window.localStorage.setItem('income', JSON.stringify(
+            expenses.filter(({type}) => type === 'income')
+          ))
+          this.analyzeExpenses()
+        })
       })
   }
 

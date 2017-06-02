@@ -12,8 +12,9 @@ module.exports = env => {
     entry: {
       app: './src/client/index.js',
       vendor: [
-        'preact',
-        'preact-tap-event-plugin',
+        'react',
+        'react-dom',
+        'react-tap-event-plugin',
         'react-router-dom',
         'prop-types',
         'material-ui',
@@ -29,8 +30,8 @@ module.exports = env => {
     },
     resolve: {
       alias: {
-        'react': 'preact-compat',
-        'react-dom': 'preact-compat',
+        // 'react': 'preact-compat',
+        // 'react-dom': 'preact-compat',
         'views': resolve(__dirname, '../src/client/views')
       }
     },

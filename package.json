@@ -1,6 +1,6 @@
 {
   "name": "eun",
-  "version": "1.4.5",
+  "version": "1.4.6",
   "description": "Automated expense tracker",
   "main": "src/server/index.js",
   "scripts": {
@@ -34,12 +34,12 @@
     "moment": "^2.18.1",
     "moment-timezone": "^0.5.13",
     "mongoose": "^4.9.6",
-    "preact": "^8.1.0",
-    "preact-compat": "^3.16.0",
-    "preact-tap-event-plugin": "^0.1.2",
     "prop-types": "^15.5.8",
+    "react": "^15.5.4",
     "react-chartjs-2": "^2.0.5",
+    "react-dom": "^15.5.4",
     "react-router-dom": "^4.1.1",
+    "react-tap-event-plugin": "^2.0.1",
     "striptags": "^3.0.1"
   },
   "devDependencies": {
