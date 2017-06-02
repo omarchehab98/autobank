@@ -124,7 +124,7 @@ class ExpensesPage extends Component {
           window.localStorage.setItem('lastFetch', now)
           const {expenses} = this.state
           window.localStorage.setItem('income', JSON.stringify(
-            income.filter(({type}) => type === 'income')
+            expenses.filter(({type}) => type === 'income')
           ))
           this.analyzeExpenses()
         })
