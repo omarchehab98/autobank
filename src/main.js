@@ -4,7 +4,7 @@ function startClient () {
   const app = express()
   const buildDirectory = path.resolve('dist')
   app.use(express.static(buildDirectory))
-  app.use(function (res, res, next) {
+  app.use(function (req, res, next) {
     res.status(200).sendFile(buildDirectory + '/index.html')
   })
   const host = 'localhost'
