@@ -1,5 +1,4 @@
 node_modules
 *.log
 logs
-credentials.js
 dist
