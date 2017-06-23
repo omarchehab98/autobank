@@ -4,7 +4,7 @@
 
 * **automatically** logs **expenses** by **monitoring** mail
 * provides weekly and monthly **cash flow** of expenses and income
-* **authentication** using a secret key (uses Storage API to **store** token locally)
+* **authentication** using a secret key (uses Storage API to store token locally)
 
 ![Screenshot 1](./docs/Screenshot-1.png) ![Screenshot 2](./docs/Screenshot-2.png) ![Screenshot 3](./docs/Screenshot-3.png)
 
@@ -12,18 +12,29 @@
 
 Available on [npm][]
 
+### Node
+
 ```bash
 git clone https://github.com/omarchehab98/eun
+cd eun
 npm install
 npm test
 npm run build
 npm start
 ```
 
-* `npm run watch-client`
+### Docker
+
+```bash
+git clone https://github.com/omarchehab98/eun
+cd eun
+docker-compose up
+```
+
+* `npm run dev-client`
 Watches the client directory, keeps browser in sync with new changes.
 
-* `npm run watch-server`
+* `npm run dev-server`
 Watches the server directory, restarts server when changes are made.
 
 * `npm run lint`

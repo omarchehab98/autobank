@@ -1,16 +1,16 @@
-function startClient() {
+function startClient () {
   const path = require('path')
   const express = require('express')
   const app = express()
   const buildDirectory = path.join('..', 'dist')
   app.use(express.static(buildDirectory))
   const host = 'localhost'
-  const port = 8081
+  const port = 80
   app.listen(port, host)
   console.log(`Client: ${host}:${port}`)
 }
 
-function startServer() {
+function startServer () {
   require('./server/index.js')
 }
 

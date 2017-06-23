@@ -6,12 +6,12 @@ module.exports = {
     'port': 8080
   },
   'authentication': {
-    'host': 'localhost',
+    'host': 'db',
     'port': 27017,
     'database': ''
   },
   'expenses': {
-    'host': 'localhost',
+    'host': 'db',
     'port': 27017,
     'database': ''
   },

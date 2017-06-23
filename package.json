@@ -6,8 +6,8 @@
   "scripts": {
     "build": "webpack --env.production --config config/webpack",
     "start": "node src/main.js",
-    "test": "eslint . && mocha",
-    "lint": "eslint --fix .",
+    "test": "eslint src && mocha",
+    "lint": "eslint --fix src",
     "dev-client": "webpack-dashboard -- webpack-dev-server --config config/webpack",
     "dev-server": "nodemon --watch src/server src/server/index.js"
   },
