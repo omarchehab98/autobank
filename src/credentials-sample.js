@@ -1,4 +1,8 @@
 module.exports = {
+  'webserver': {
+    'host': 'localhost',
+    'port': 3000
+  },
   'api': {
     'privateKey': '',
     'path': '',

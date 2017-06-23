@@ -1,23 +1,5 @@
-function startClient () {
-  const path = require('path')
-  const express = require('express')
-  const app = express()
-  const buildDirectory = path.resolve('dist')
-  app.use(express.static(buildDirectory))
-  app.use(function (req, res, next) {
-    res.status(200).sendFile(buildDirectory + '/index.html')
-  })
-  const host = 'localhost'
-  const port = 3000
-  app.listen(port, host)
-  console.log(`Client: ${host}:${port}`)
-}
-
-function startServer () {
-  require('./server/index.js')
-}
-
+// eslint-disable-next-line import/no-unresolved
+const credentials = require('./credentials.js')
 process.on('uncaughtException', console.error)
-
-startClient()
-startServer()
+require('./client/webserver.js')(credentials)
+require('./server/index.js')(credentials)
