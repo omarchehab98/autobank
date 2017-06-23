@@ -5,10 +5,10 @@ function startClient () {
   const buildDirectory = path.resolve('dist')
   app.use(express.static(buildDirectory))
   app.use(function (res, res, next) {
-    res.status(404).sendFile(buildDirectory + '/index.html')
+    res.status(200).sendFile(buildDirectory + '/index.html')
   })
   const host = 'localhost'
-  const port = 8081
+  const port = 3000
   app.listen(port, host)
   console.log(`Client: ${host}:${port}`)
 }
