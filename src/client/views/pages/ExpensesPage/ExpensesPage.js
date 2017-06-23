@@ -330,7 +330,7 @@ class ExpensesPage extends Component {
             <p>You do not have any expenses logged into the database yet.</p>
           </Card>
         )}
-        {isEmpty && (
+        {!!isEmpty && (
           <div>
             {/* Total */}
             <Card style={{ margin: '10px 0', padding: '16px' }}>
