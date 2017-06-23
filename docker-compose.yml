@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  app:
+    image: node:boron
+    volumes:
+      - .:/app
+    working_dir: /app
+    links:
+      - db
+    expose:
+      - 80
+      - 8080
+    command: /bin/sh -c "npm install && npm rebuild && npm run build && npm start"
+  db:
+    image: mongo:3.4
+    ports:
+      - 27017:27017
+    volumes:
+      - /data/db:/data/db
+    command: /bin/sh -c "mongod --smallfiles"

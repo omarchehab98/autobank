@@ -1,16 +1,15 @@
 {
   "name": "eun",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "Automated expense tracker",
-  "main": "src/server/index.js",
+  "main": "src/main.js",
   "scripts": {
-    "lint": "eslint .",
-    "lint-auto": "eslint --fix .",
-    "test": "mocha",
-    "start": "node src/server/index.js",
     "build": "webpack --env.production --config config/webpack",
-    "watch-client": "webpack-dashboard -- webpack-dev-server --config config/webpack",
-    "watch-server": "nodemon --watch src/server src/server/index.js"
+    "start": "NODE_ENV=production node src/main.js",
+    "test": "eslint src && mocha",
+    "lint": "eslint --fix src",
+    "dev-client": "webpack-dashboard -- webpack-dev-server --config config/webpack",
+    "dev-server": "nodemon --watch src/server src/server/index.js"
   },
   "repository": {
     "type": "git",

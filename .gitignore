@@ -1,5 +1,6 @@
 node_modules
 *.log
 logs
-credentials.json
+credentials.js
+environment.js
 dist

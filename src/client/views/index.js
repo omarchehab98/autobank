@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 import {
   BrowserRouter as Router,
   Route,
-  Redirect
+  Redirect,
+  Switch
 } from 'react-router-dom'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
@@ -11,16 +12,18 @@ import server from 'views/helpers/network.js'
 
 import ExpensesPage from 'views/pages/ExpensesPage'
 import LoginPage from 'views/pages/LoginPage'
+import Status404Page from 'views/pages/Status404Page'
 
 class Application extends Component {
   render () {
     return (
       <Router>
         <MuiThemeProvider>
-          <div>
+          <Switch>
             <Route exact path="/" component={LoginPage} />
             <PrivateRoute path="/expenses" component={ExpensesPage} />
-          </div>
+            <Route component={Status404Page} />
+          </Switch>
         </MuiThemeProvider>
       </Router>
     )
