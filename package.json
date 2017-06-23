@@ -5,7 +5,7 @@
   "main": "src/main.js",
   "scripts": {
     "build": "webpack --env.production --config config/webpack",
-    "start": "node src/main.js",
+    "start": "NODE_ENV=production node src/main.js",
     "test": "eslint src && mocha",
     "lint": "eslint --fix src",
     "dev-client": "webpack-dashboard -- webpack-dev-server --config config/webpack",
