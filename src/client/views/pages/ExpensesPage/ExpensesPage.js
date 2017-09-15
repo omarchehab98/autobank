@@ -81,7 +81,7 @@ class ExpensesPage extends Component {
   }
 
   componentDidMount () {
-    const lastFetch = 0;
+    const lastFetch = 0
     // const lastFetch = window.localStorage.getItem('lastFetch') || 0
     const now = Date.now()
 
@@ -94,9 +94,9 @@ class ExpensesPage extends Component {
     server.getExpenses(lastFetch, now)
       .then(expenses => {
         const newExpenses = expenses.map(expense => ({
-            type: 'expense',
-            ...expense
-          }))
+          type: 'expense',
+          ...expense
+        }))
           .sort(byTimestampDesc)
         this.setState({
           expenses: newExpenses
@@ -113,9 +113,9 @@ class ExpensesPage extends Component {
     server.getIncome(lastFetch, now)
       .then(income => {
         const newExpenses = income.map(income => ({
-            type: 'income',
-            ...income
-          }))
+          type: 'income',
+          ...income
+        }))
           .sort(byTimestampDesc)
         this.setState({
           expenses: newExpenses
