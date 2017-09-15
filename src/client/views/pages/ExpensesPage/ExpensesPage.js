@@ -85,18 +85,19 @@ class ExpensesPage extends Component {
     // const lastFetch = window.localStorage.getItem('lastFetch') || 0
     const now = Date.now()
 
-    this.setState(() => ({
-      expenses: JSON.parse(window.localStorage.getItem('expenses') || '[]')
-        .concat(JSON.parse(window.localStorage.getItem('income') || '[]'))
-        .sort(byTimestampDesc)
-    }), this.analyzeExpenses)
+    // this.setState(() => ({
+    //   expenses: JSON.parse(window.localStorage.getItem('expenses') || '[]')
+    //     .concat(JSON.parse(window.localStorage.getItem('income') || '[]'))
+    //     .sort(byTimestampDesc)
+    // }), this.analyzeExpenses)
 
     server.getExpenses(lastFetch, now)
       .then(expenses => {
-        const newExpenses = expenses.map(expense => ({
-          type: 'expense',
-          ...expense
-        }))
+        const newExpenses = this.state.expenses
+          .concat(expenses.map(expense => ({
+            type: 'expense',
+            ...expense
+          })))
           .sort(byTimestampDesc)
         this.setState({
           expenses: newExpenses
@@ -112,10 +113,11 @@ class ExpensesPage extends Component {
 
     server.getIncome(lastFetch, now)
       .then(income => {
-        const newExpenses = income.map(income => ({
-          type: 'income',
-          ...income
-        }))
+        const newExpenses = this.state.expenses
+          .concat(income.map(income => ({
+            type: 'income',
+            ...income
+          })))
           .sort(byTimestampDesc)
         this.setState({
           expenses: newExpenses
