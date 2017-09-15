@@ -189,17 +189,10 @@ class ExpenseCard extends Component {
         <CardHeader
           title={amount}
           titleColor={colorMoney(this.props.amount)}
-          subtitle={this.props.description}
-          actAsExpander={true}
-          showExpandableButton={true}
+          subtitle={[this.props.description || '', this.props.category || ''].join(' — ')}
         />
 
-        <CardText expandable={true}>
-          {this.props.category &&
-          <div>
-            <strong>Category</strong> {this.props.category}
-          </div>}
-
+        <CardText style={{ padding: '0 16px' }}>
           {this.props.account &&
           <div>
             <strong>Account</strong> {account}
@@ -210,7 +203,7 @@ class ExpenseCard extends Component {
             <strong>Available Credit</strong> {this.props.availableCredit + ' ' + this.props.currency}
           </div>}
 
-          <div>
+          <div style={{ textAlign: 'right' }}>
             {time}
           </div>
         </CardText>
