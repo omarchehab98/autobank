@@ -81,7 +81,8 @@ class ExpensesPage extends Component {
   }
 
   componentDidMount () {
-    const lastFetch = window.localStorage.getItem('lastFetch') || 0
+    const lastFetch = 0;
+    // const lastFetch = window.localStorage.getItem('lastFetch') || 0
     const now = Date.now()
 
     this.setState(() => ({
@@ -92,19 +93,18 @@ class ExpensesPage extends Component {
 
     server.getExpenses(lastFetch, now)
       .then(expenses => {
-        const newExpenses = this.state.expenses
-          .concat(expenses.map(expense => ({
+        const newExpenses = expenses.map(expense => ({
             type: 'expense',
             ...expense
-          })))
+          }))
           .sort(byTimestampDesc)
         this.setState({
           expenses: newExpenses
         }, () => {
           window.localStorage.setItem('lastFetch', now)
-          const {expenses} = this.state
+          const { expenses } = this.state
           window.localStorage.setItem('expenses', JSON.stringify(
-            expenses.filter(({type}) => type === 'expense')
+            expenses.filter(({ type }) => type === 'expense')
           ))
           this.analyzeExpenses()
         })
@@ -112,19 +112,18 @@ class ExpensesPage extends Component {
 
     server.getIncome(lastFetch, now)
       .then(income => {
-        const newExpenses = this.state.expenses
-          .concat(income.map(income => ({
+        const newExpenses = income.map(income => ({
             type: 'income',
             ...income
-          })))
+          }))
           .sort(byTimestampDesc)
         this.setState({
           expenses: newExpenses
         }, () => {
           window.localStorage.setItem('lastFetch', now)
-          const {expenses} = this.state
+          const { expenses } = this.state
           window.localStorage.setItem('income', JSON.stringify(
-            expenses.filter(({type}) => type === 'income')
+            expenses.filter(({ type }) => type === 'income')
           ))
           this.analyzeExpenses()
         })
