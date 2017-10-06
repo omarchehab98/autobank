@@ -39,6 +39,22 @@ docker-compose up
 
 ## Development
 
+### Prerequisites
+
+If you are planning to develop a feature or fix a bug, you should be familiar with the stack.
+
+* Client
+  * web browser
+  * [react](https://github.com/facebook/react)
+  * [material-ui](https://github.com/callemall/material-ui)
+* Server
+  * node
+  * [express](https://github.com/expressjs/express)
+  * [mongoose](https://github.com/Automattic/mongoose)
+  * [imap](https://github.com/mscdex/node-imap)
+
+### Hot Reloading
+
 * `npm run dev-client`
 Watches the client directory, keeps browser in sync with new changes.
 
