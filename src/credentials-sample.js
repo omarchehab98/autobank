@@ -1,35 +1,39 @@
 module.exports = {
   'webserver': {
     'host': 'localhost',
-    'port': 3000
+    'port': 8080,
+    'staticDirectory': 'dist'
   },
   'api': {
-    'privateKey': '',
-    'path': '',
+    'privateKey': 'somerandomstringhere',
+    'path': '/api/v1',
     'host': 'localhost',
-    'port': 8080
+    'port': 8081
   },
   'authentication': {
     'host': 'localhost',
     'port': 27017,
-    'database': ''
+    'database': 'eun',
+    'authSource': '',
+    'username': '',
+    'password': ''
   },
   'expenses': {
     'host': 'localhost',
     'port': 27017,
-    'database': ''
+    'database': 'eun',
+    'authSource': '',
+    'username': '',
+    'password': ''
   },
   'mailbox': {
-    'host': 'localhost',
+    'host': 'mail.example.com',
     'port': 993,
-    'user': '',
+    'user': 'foo@mail.example.com',
     'password': '',
     'tls': true,
     'tlsOptions': {
-      'rejectUnauthorized': true,
-      'key': '',
-      'cert': '',
-      'ca': ''
+      'rejectUnauthorized': false
     }
   }
 }
