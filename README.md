@@ -18,7 +18,13 @@ Available on [npm][]
 git clone https://github.com/omarchehab98/eun
 cd eun
 npm install
-npm test
+
+# development
+# run both in seperate terminals
+npm run dev-client
+npm run dev-server
+
+# production
 npm run build
 npm start
 ```
@@ -31,15 +37,20 @@ cd eun
 docker-compose up
 ```
 
+## Development
+
 * `npm run dev-client`
 Watches the client directory, keeps browser in sync with new changes.
 
 * `npm run dev-server`
 Watches the server directory, restarts server when changes are made.
 
-* `npm run lint`
-Code quality.
-
+When submitting a merge request, it must pass all three commands below.
+```
+npm run build
+npm run lint
+npm test
+```
 
 ## License
 
