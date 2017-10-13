@@ -11,6 +11,8 @@ import {
 } from 'react-chartjs-2'
 import moment from 'moment'
 import map from 'lodash/map'
+import sortBy from 'lodash/sortBy'
+import curry from 'lodash/curry'
 
 import Card from 'material-ui/Card'
 import Chip from 'material-ui/Chip'
@@ -46,12 +48,11 @@ function toAccount (accounts, x) {
 }
 
 /**
- * Helper function used like `sort(byTimestampDesc)` on `expenses`
- * @param {Object} x1
- * @param {Object} x2
+ * Helper function used like `_.sortBy(collection, byTimestampDesc)` on `expenses`
+ * @param {Object} x
  */
-function byTimestampDesc (x1, x2) {
-  return x2.timestamp - x1.timestamp
+function byTimestampDesc (x) {
+  return -x.timestamp
 }
 
 class ExpensesPage extends Component {
@@ -93,12 +94,14 @@ class ExpensesPage extends Component {
 
     server.getExpenses(lastFetch, now)
       .then(expenses => {
-        const newExpenses = this.state.expenses
+        let newExpenses = this.state.expenses
           .concat(expenses.map(expense => ({
             type: 'expense',
             ...expense
           })))
-          .sort(byTimestampDesc)
+        if (this.state.expenses.length > 0) {
+          newExpenses = sortBy(newExpenses, byTimestampDesc)
+        }
         this.setState({
           expenses: newExpenses
         }, () => {
@@ -113,12 +116,14 @@ class ExpensesPage extends Component {
 
     server.getIncome(lastFetch, now)
       .then(income => {
-        const newExpenses = this.state.expenses
+        let newExpenses = this.state.expenses
           .concat(income.map(income => ({
             type: 'income',
             ...income
           })))
-          .sort(byTimestampDesc)
+        if (this.state.expenses.length > 0) {
+          newExpenses = sortBy(newExpenses, byTimestampDesc)
+        }
         this.setState({
           expenses: newExpenses
         }, () => {
@@ -152,25 +157,22 @@ class ExpensesPage extends Component {
     }))
   }
 
-  handleEditExpense = (id, changes) => {
-    const byTimestampDesc = (x1, x2) => {
-      return x2.timestamp - x1.timestamp
+  handleEditExpense = (index, id, expenseAfterEdit) => {
+    const expenses = this.state.expenses
+    let newExpenses = [
+      ...expenses.slice(0, index), {
+        ...expenses[index],
+        ...expenseAfterEdit
+      },
+      ...expenses.slice(index + 1)
+    ]
+    const expenseBeforeEdit = expenses[index]
+    if (expenseAfterEdit.timestamp !== expenseBeforeEdit) {
+      newExpenses = sortBy(newExpenses, byTimestampDesc)
     }
-    this.setState(prev => ({
-      expenses: prev.expenses
-        .map(x => {
-          if (x.id === id) {
-            x = {
-              ...x,
-              description: changes.description,
-              timestamp: changes.timestamp,
-              category: changes.category
-            }
-          }
-          return x
-        })
-        .sort(byTimestampDesc)
-    }), this.analyzeExpenses)
+    this.setState({
+      expenses: newExpenses
+    }, this.analyzeExpenses)
   }
 
   handleDeleteExpense = id => {
@@ -505,7 +507,7 @@ class ExpensesPage extends Component {
                 />}
             </Card>
             <div>
-              {this.state.expenses.map(expense => {
+              {this.state.expenses.map((expense, i) => {
                 const currDate = moment(expense.timestamp * 1000)
                 const currDay = currDate.day()
                 let divider
@@ -523,7 +525,7 @@ class ExpensesPage extends Component {
                     key={expense.id}
                     {...expense}
                     categories={Object.keys(this.state.expenses.reduce(toCategory, {}))}
-                    onEdit={this.handleEditExpense}
+                    onEdit={curry(this.handleEditExpense)(i)}
                     onDelete={this.handleDeleteExpense}
                   />
                 ]
