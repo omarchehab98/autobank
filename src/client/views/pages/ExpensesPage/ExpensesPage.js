@@ -504,6 +504,9 @@ class ExpensesPage extends Component {
                       backgroundColor: Object.keys(this.state.monthly.expenses).map(s => hashHSL(s, '75%', '40%'))
                     }]
                   }}
+                  options={{
+                    maintainAspectRatio: false
+                  }}
                 />}
             </Card>
             <div>

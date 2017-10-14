@@ -20,10 +20,9 @@ function render (reload) {
   )
 }
 
-render()
-showSnackbar(false)
-
 if (process.env.NODE_ENV === 'production') {
+  render()
+  showSnackbar(false)
   if ('serviceWorker' in navigator && window.location.protocol === 'https:') {
     navigator.serviceWorker.register('/service-worker.js')
       .then(reg => {
@@ -59,8 +58,11 @@ if (process.env.NODE_ENV === 'production') {
       })
   }
 } else {
+  require('./mock.js')
   module.hot.accept('./views', render)
-  require('eruda').init()
+  // require('eruda').init()
+  render()
+  showSnackbar(false)
 }
 
 function showSnackbar (duration, message, action, onAction) {

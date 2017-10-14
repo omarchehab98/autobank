@@ -17,5 +17,8 @@ services:
     ports:
       - 27017:27017
     volumes:
-      - /data/db:/data/db
+      - db-storage:/data/db
     command: /bin/sh -c "mongod --smallfiles"
+
+volumes:
+  db-storage:
