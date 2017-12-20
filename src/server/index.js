@@ -3,7 +3,7 @@ module.exports = function (credentials) {
   const expenses = new Expenses(credentials.expenses)
   expenses.on(
     'connect',
-    () => console.log(`Server Expenses: ${credentials.expenses.host}:${credentials.expenses.port}`)
+    () => console.log(`Server Expenses Mongo: ${credentials.expenses.host}:${credentials.expenses.port}`)
   )
   expenses.on('error', console.error)
 
@@ -21,7 +21,7 @@ module.exports = function (credentials) {
   const authentication = new Authentication(credentials.authentication)
   authentication.on(
     'connect',
-    () => console.log(`Server Authentication: ${credentials.authentication.host}:${credentials.authentication.port}`)
+    () => console.log(`Server Authentication Mongo: ${credentials.authentication.host}:${credentials.authentication.port}`)
   )
   authentication.on('error', console.error)
 
