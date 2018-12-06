@@ -1,6 +1,6 @@
-# ![eun][logo]
+# ![autobank][logo]
 
-[![npm][npm-badge]][npm][![Build Status][build-badge]][build-status] [![Standard code style][standard-badge]][standard] [![License][license-badge]][license]
+[![Build Status][build-badge]][build-status] [![Standard code style][standard-badge]][standard] [![License][license-badge]][license]
 
 * **automatically** logs **expenses** by **monitoring** mail
 * provides weekly and monthly **cash flow** of expenses and income
@@ -10,12 +10,10 @@
 
 ## Installation
 
-Available on [npm][]
-
 ### Node
 
 ```bash
-git clone https://github.com/omarchehab98/eun
+git clone https://github.com/omarchehab98/autobank
 cd eun
 npm install
 
@@ -32,7 +30,7 @@ npm start
 ### Docker
 
 ```bash
-git clone https://github.com/omarchehab98/eun
+git clone https://github.com/omarchehab98/autobank
 cd eun
 docker-compose up
 ```
@@ -74,22 +72,16 @@ npm test
 
 <!-- Definitions -->
 
-[logo]: https://cdn.rawgit.com/omarchehab98/eun/312f622f/logo.svg
+[build-badge]: https://travis-ci.org/omarchehab98/autobank.svg?branch=master
 
-[build-badge]: https://travis-ci.org/omarchehab98/eun.svg?branch=master
-
-[build-status]: https://travis-ci.org/omarchehab98/eun
+[build-status]: https://travis-ci.org/omarchehab98/autobank
 
 [standard]: http://standardjs.com
 
 [standard-badge]: https://img.shields.io/badge/code_style-standard-brightgreen.svg
 
-[license-badge]: https://img.shields.io/github/license/omarchehab98/eun.svg
+[license-badge]: https://img.shields.io/github/license/omarchehab98/autobank.svg
 
-[license]: https://github.com/omarchehab98/eun/blob/master/LICENSE
+[license]: https://github.com/omarchehab98/autobank/blob/master/LICENSE
 
 [author]: https://omarchehab.com
-
-[npm]: https://www.npmjs.com/package/eun
-
-[npm-badge]: https://img.shields.io/npm/v/eun.svg
