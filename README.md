@@ -1,4 +1,4 @@
-# ![autobank][logo]
+# Autobank by Omar Chehab
 
 [![Build Status][build-badge]][build-status] [![Standard code style][standard-badge]][standard] [![License][license-badge]][license]
 
